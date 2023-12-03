@@ -33,10 +33,15 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.lvwEmployee = new System.Windows.Forms.ListView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnEmployee = new System.Windows.Forms.Button();
+            this.btnCustomer = new System.Windows.Forms.Button();
+            this.btnTransaction = new System.Windows.Forms.Button();
+            this.btnService = new System.Windows.Forms.Button();
+            this.btnReport = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
@@ -46,11 +51,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnCustomer = new System.Windows.Forms.Button();
-            this.btnEmployee = new System.Windows.Forms.Button();
-            this.btnReport = new System.Windows.Forms.Button();
-            this.btnService = new System.Windows.Forms.Button();
-            this.btnTransaction = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -105,26 +105,6 @@
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(461, 61);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(114, 103);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "label2";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -136,6 +116,26 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Data Karyawan";
             this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(44, 16);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "label2";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(461, 61);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(114, 103);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // groupBox2
             // 
@@ -150,6 +150,82 @@
             this.groupBox2.Size = new System.Drawing.Size(177, 600);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
+            // 
+            // btnEmployee
+            // 
+            this.btnEmployee.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEmployee.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnEmployee.Image = ((System.Drawing.Image)(resources.GetObject("btnEmployee.Image")));
+            this.btnEmployee.Location = new System.Drawing.Point(46, 452);
+            this.btnEmployee.Name = "btnEmployee";
+            this.btnEmployee.Size = new System.Drawing.Size(84, 99);
+            this.btnEmployee.TabIndex = 28;
+            this.btnEmployee.Text = "Karyawan";
+            this.btnEmployee.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnEmployee.UseVisualStyleBackColor = false;
+            this.btnEmployee.Click += new System.EventHandler(this.btnEmployee_Click);
+            // 
+            // btnCustomer
+            // 
+            this.btnCustomer.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnCustomer.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCustomer.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnCustomer.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomer.Image")));
+            this.btnCustomer.Location = new System.Drawing.Point(46, 347);
+            this.btnCustomer.Name = "btnCustomer";
+            this.btnCustomer.Size = new System.Drawing.Size(84, 99);
+            this.btnCustomer.TabIndex = 29;
+            this.btnCustomer.Text = "Pelanggan";
+            this.btnCustomer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnCustomer.UseVisualStyleBackColor = false;
+            this.btnCustomer.Click += new System.EventHandler(this.btnCustomer_Click);
+            // 
+            // btnTransaction
+            // 
+            this.btnTransaction.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnTransaction.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnTransaction.BackgroundImage")));
+            this.btnTransaction.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnTransaction.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTransaction.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnTransaction.Location = new System.Drawing.Point(46, 32);
+            this.btnTransaction.Name = "btnTransaction";
+            this.btnTransaction.Size = new System.Drawing.Size(84, 99);
+            this.btnTransaction.TabIndex = 25;
+            this.btnTransaction.Text = "Transaksi";
+            this.btnTransaction.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnTransaction.UseVisualStyleBackColor = false;
+            this.btnTransaction.Click += new System.EventHandler(this.btnTransaction_Click);
+            // 
+            // btnService
+            // 
+            this.btnService.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnService.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnService.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnService.Image = ((System.Drawing.Image)(resources.GetObject("btnService.Image")));
+            this.btnService.Location = new System.Drawing.Point(46, 137);
+            this.btnService.Name = "btnService";
+            this.btnService.Size = new System.Drawing.Size(84, 99);
+            this.btnService.TabIndex = 26;
+            this.btnService.Text = "Layanan";
+            this.btnService.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnService.UseVisualStyleBackColor = false;
+            this.btnService.Click += new System.EventHandler(this.btnService_Click);
+            // 
+            // btnReport
+            // 
+            this.btnReport.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReport.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnReport.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.Image")));
+            this.btnReport.Location = new System.Drawing.Point(46, 242);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(84, 99);
+            this.btnReport.TabIndex = 27;
+            this.btnReport.Text = "Laporan";
+            this.btnReport.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnReport.UseVisualStyleBackColor = false;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
             // txtSearch
             // 
@@ -230,77 +306,6 @@
             this.label5.Size = new System.Drawing.Size(118, 18);
             this.label5.TabIndex = 19;
             this.label5.Text = "Nama Pengguna";
-            // 
-            // btnCustomer
-            // 
-            this.btnCustomer.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnCustomer.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCustomer.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnCustomer.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomer.Image")));
-            this.btnCustomer.Location = new System.Drawing.Point(46, 347);
-            this.btnCustomer.Name = "btnCustomer";
-            this.btnCustomer.Size = new System.Drawing.Size(84, 99);
-            this.btnCustomer.TabIndex = 29;
-            this.btnCustomer.Text = "Pelanggan";
-            this.btnCustomer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnCustomer.UseVisualStyleBackColor = false;
-            // 
-            // btnEmployee
-            // 
-            this.btnEmployee.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnEmployee.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEmployee.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnEmployee.Image = ((System.Drawing.Image)(resources.GetObject("btnEmployee.Image")));
-            this.btnEmployee.Location = new System.Drawing.Point(46, 452);
-            this.btnEmployee.Name = "btnEmployee";
-            this.btnEmployee.Size = new System.Drawing.Size(84, 99);
-            this.btnEmployee.TabIndex = 28;
-            this.btnEmployee.Text = "Karyawan";
-            this.btnEmployee.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnEmployee.UseVisualStyleBackColor = false;
-            // 
-            // btnReport
-            // 
-            this.btnReport.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnReport.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReport.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnReport.Image = ((System.Drawing.Image)(resources.GetObject("btnReport.Image")));
-            this.btnReport.Location = new System.Drawing.Point(46, 242);
-            this.btnReport.Name = "btnReport";
-            this.btnReport.Size = new System.Drawing.Size(84, 99);
-            this.btnReport.TabIndex = 27;
-            this.btnReport.Text = "Laporan";
-            this.btnReport.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnReport.UseVisualStyleBackColor = false;
-            // 
-            // btnService
-            // 
-            this.btnService.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnService.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnService.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnService.Image = ((System.Drawing.Image)(resources.GetObject("btnService.Image")));
-            this.btnService.Location = new System.Drawing.Point(46, 137);
-            this.btnService.Name = "btnService";
-            this.btnService.Size = new System.Drawing.Size(84, 99);
-            this.btnService.TabIndex = 26;
-            this.btnService.Text = "Layanan";
-            this.btnService.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnService.UseVisualStyleBackColor = false;
-            // 
-            // btnTransaction
-            // 
-            this.btnTransaction.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnTransaction.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnTransaction.BackgroundImage")));
-            this.btnTransaction.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnTransaction.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTransaction.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnTransaction.Location = new System.Drawing.Point(46, 32);
-            this.btnTransaction.Name = "btnTransaction";
-            this.btnTransaction.Size = new System.Drawing.Size(84, 99);
-            this.btnTransaction.TabIndex = 25;
-            this.btnTransaction.Text = "Transaksi";
-            this.btnTransaction.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnTransaction.UseVisualStyleBackColor = false;
             // 
             // FrmEmployee
             // 

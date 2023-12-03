@@ -69,6 +69,7 @@
             this.btnEmployee.Text = "Karyawan";
             this.btnEmployee.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnEmployee.UseVisualStyleBackColor = false;
+            this.btnEmployee.Click += new System.EventHandler(this.btnEmployee_Click);
             // 
             // btnCustomer
             // 
@@ -83,6 +84,7 @@
             this.btnCustomer.Text = "Pelanggan";
             this.btnCustomer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnCustomer.UseVisualStyleBackColor = false;
+            this.btnCustomer.Click += new System.EventHandler(this.btnCustomer_Click);
             // 
             // btnTransaction
             // 
@@ -98,6 +100,7 @@
             this.btnTransaction.Text = "Transaksi";
             this.btnTransaction.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnTransaction.UseVisualStyleBackColor = false;
+            this.btnTransaction.Click += new System.EventHandler(this.btnTransaction_Click);
             // 
             // btnReport
             // 
@@ -112,6 +115,7 @@
             this.btnReport.Text = "Laporan";
             this.btnReport.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnReport.UseVisualStyleBackColor = false;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 
             // txtHP
             // 
@@ -220,6 +224,7 @@
             this.btnService.Text = "Layanan";
             this.btnService.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnService.UseVisualStyleBackColor = false;
+            this.btnService.Click += new System.EventHandler(this.btnService_Click);
             // 
             // label3
             // 
@@ -321,6 +326,7 @@
             this.Name = "FrmCustomer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmCustomer";
+            this.Load += new System.EventHandler(this.FrmCustomer_Load);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
