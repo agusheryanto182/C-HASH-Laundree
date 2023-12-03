@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Laundry.View
 {
-    public partial class FrmLayanan : Form
+    public partial class FrmService : Form
     {
-        public FrmLayanan()
+        public FrmService()
         {
             InitializeComponent();
         }

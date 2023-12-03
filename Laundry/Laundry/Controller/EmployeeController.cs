@@ -59,7 +59,7 @@ namespace Laundry.Controller
             // cek npm yang diinputkan tidak boleh kosong
             if (string.IsNullOrEmpty(emp.Username))
             {
-                MessageBox.Show("NPM harus diisi !!!", "Peringatan",
+                MessageBox.Show("Username harus diisi !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return 0;
             }
@@ -75,7 +75,7 @@ namespace Laundry.Controller
             // cek angkatan yang diinputkan tidak boleh kosong
             if (string.IsNullOrEmpty(emp.Password))
             {
-                MessageBox.Show("Angkatan harus diisi !!!", "Peringatan",
+                MessageBox.Show("Password harus diisi !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return 0;
             }
@@ -92,11 +92,11 @@ namespace Laundry.Controller
 
             if (result > 0)
             {
-                MessageBox.Show("Data mahasiswa berhasil disimpan !", "Informasi",
+                MessageBox.Show("Data karyawan berhasil disimpan !", "Informasi",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
-                MessageBox.Show("Data mahasiswa gagal disimpan !!!", "Peringatan",
+                MessageBox.Show("Data karyawan gagal disimpan !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             return result;
@@ -109,7 +109,7 @@ namespace Laundry.Controller
             // cek npm yang diinputkan tidak boleh kosong
             if (string.IsNullOrEmpty(emp.Username))
             {
-                MessageBox.Show("NPM harus diisi !!!", "Peringatan",
+                MessageBox.Show("Username harus diisi !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return 0;
             }
@@ -125,7 +125,7 @@ namespace Laundry.Controller
             // cek angkatan yang diinputkan tidak boleh kosong
             if (string.IsNullOrEmpty(emp.Password))
             {
-                MessageBox.Show("Angkatan harus diisi !!!", "Peringatan",
+                MessageBox.Show("Password harus diisi !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return 0;
             }
@@ -142,11 +142,11 @@ namespace Laundry.Controller
 
             if (result > 0)
             {
-                MessageBox.Show("Data mahasiswa berhasil diupdate !", "Informasi",
+                MessageBox.Show("Data karyawan berhasil diupdate !", "Informasi",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
-                MessageBox.Show("Data mahasiswa gagal diupdate !!!", "Peringatan",
+                MessageBox.Show("Data karyawan gagal diupdate !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             return result;
@@ -159,7 +159,7 @@ namespace Laundry.Controller
             // cek nilai npm yang diinputkan tidak boleh kosong
             if (string.IsNullOrEmpty(emp.Username))
             {
-                MessageBox.Show("NPM harus diisi !!!", "Peringatan",
+                MessageBox.Show("Username harus diisi !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return 0;
             }
@@ -176,11 +176,11 @@ namespace Laundry.Controller
 
             if (result > 0)
             {
-                MessageBox.Show("Data mahasiswa berhasil dihapus !", "Informasi",
+                MessageBox.Show("Data karyawan berhasil dihapus !", "Informasi",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
-                MessageBox.Show("Data mahasiswa gagal dihapus !!!", "Peringatan",
+                MessageBox.Show("Data karyawan gagal dihapus !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             return result;

@@ -20,7 +20,7 @@ namespace Laundry
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             DatabaseHelper.InitializeDatabase();
-            Application.Run(new FrmLogin());
+            Application.Run(new FrmHome());
         }
     }
 }

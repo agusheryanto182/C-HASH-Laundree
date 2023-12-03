@@ -16,5 +16,25 @@ namespace Laundry.View
         {
             InitializeComponent();
         }
+
+        private void FrmHome_Load(object sender, EventArgs e)
+        {
+            FrmLogin Login = new FrmLogin();   
+            Login.ShowDialog();
+        }
+
+        private void btnTransaction_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FrmTransactions frmTransactions = new FrmTransactions();
+            frmTransactions.ShowDialog();
+        }
+
+        private void btnEmployee_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FrmEmployee frmEmployee = new FrmEmployee();
+            frmEmployee.ShowDialog();   
+        }
     }
 }

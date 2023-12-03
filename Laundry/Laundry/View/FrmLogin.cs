@@ -36,8 +36,7 @@ namespace Laundry.View
             bool result = controller.PerformLogin(emp);
             if (result) 
             {
-                FrmEmployee frmEmployee = new FrmEmployee();
-                frmEmployee.ShowDialog();
+                this.Close();
             } else
             {
                 //User is not valid

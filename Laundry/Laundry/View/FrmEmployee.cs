@@ -14,9 +14,15 @@ namespace Laundry.View
 {
     public partial class FrmEmployee : Form
     {
+        // deklarasi tipe data untuk event OnCreate dan OnUpdate
+        public delegate void CreateUpdateEventHandler(Employee emp);
+        // deklarasi objek controller
+        private EmployeeController controller;
+        // deklarasi field untuk meyimpan objek mahasiswa
+        private Employee emp;
         private List<Employee> listOfEmployee = new List<Employee>();
 
-        private EmployeeController controller;
+        //private EmployeeController controller;
         public FrmEmployee()
         {
             InitializeComponent();
@@ -94,13 +100,14 @@ namespace Laundry.View
 
         private void btnTambah_Click(object sender, EventArgs e)
         {
-            // buat objek form entry data mahasiswa
-            FrmEntryEmployee frmEntry = new FrmEntryEmployee("Tambah Data Employee", controller);
-            // mendaftarkan method event handler untuk merespon event OnCreate
-            frmEntry.OnCreate += OnCreateEventHandler;
-            // tampilkan form entry employee
-            frmEntry.ShowDialog();
+            Employee emp = new Employee();
+            // set nilai property objek mahasiswa yg diambil dari TextBox
+            emp.Username = txtUsername.Text;
+            emp.Name = txtName.Text;
+            emp.Password = txtPassword.Text;
 
+            int result = 0;
+            result = controller.Create(emp);
         }
 
         private void btnPerbaiki_Click(object sender, EventArgs e)
@@ -152,6 +159,16 @@ namespace Laundry.View
         private void btnSelesai_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FrmEmployee_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

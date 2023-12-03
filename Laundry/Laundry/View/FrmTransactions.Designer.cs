@@ -420,6 +420,7 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnSearch);
             this.Name = "FrmTransactions";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmTransaksi";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
