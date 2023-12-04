@@ -10,7 +10,6 @@ D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\
 D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.csproj.CopyComplete
 D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.exe
 D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.pdb
-D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.View.FrmEntryEmployee.resources
 D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.View.FrmEmployee.resources
 D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.View.FrmLogin.resources
 D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.View.FrmHome.resources

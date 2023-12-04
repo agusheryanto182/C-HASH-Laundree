@@ -74,12 +74,6 @@
     <Compile Include="View\FrmCustomer.Designer.cs">
       <DependentUpon>FrmCustomer.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FrmEntryEmployee.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\FrmEntryEmployee.Designer.cs">
-      <DependentUpon>FrmEntryEmployee.cs</DependentUpon>
-    </Compile>
     <Compile Include="View\FrmEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,9 +121,6 @@
     </Compile>
     <EmbeddedResource Include="View\FrmCustomer.resx">
       <DependentUpon>FrmCustomer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="View\FrmEntryEmployee.resx">
-      <DependentUpon>FrmEntryEmployee.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FrmEmployee.resx">
       <DependentUpon>FrmEmployee.cs</DependentUpon>

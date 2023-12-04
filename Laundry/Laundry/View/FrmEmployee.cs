@@ -19,7 +19,6 @@ namespace Laundry.View
         // deklarasi objek controller
         private EmployeeController controller;
         // deklarasi field untuk meyimpan objek mahasiswa
-        private Employee emp;
         private List<Employee> listOfEmployee = new List<Employee>();
 
         //private EmployeeController controller;
@@ -29,6 +28,7 @@ namespace Laundry.View
             controller = new EmployeeController();
             InisialisasiListView();
             LoadDataEmployee ();
+            LoadDataEmployeeByClick();
         }
 
         // atur kolom listview
@@ -38,13 +38,33 @@ namespace Laundry.View
             lvwEmployee.FullRowSelect = true;
             lvwEmployee.GridLines = true;
             lvwEmployee.Columns.Add("No.", 35, HorizontalAlignment.Center);
-            lvwEmployee.Columns.Add("Username", 91, HorizontalAlignment.Center);
-            lvwEmployee.Columns.Add("Name", 350, HorizontalAlignment.Left);
-            lvwEmployee.Columns.Add("Password", 80, HorizontalAlignment.Center);
+            lvwEmployee.Columns.Add("Username", 200, HorizontalAlignment.Center);
+            lvwEmployee.Columns.Add("Name", 200, HorizontalAlignment.Left);
+            lvwEmployee.Columns.Add("Password", 200, HorizontalAlignment.Center);
         }
 
         // method untuk menampilkan semua data mahasiswa
         private void LoadDataEmployee()
+        {
+            ClearTextBoxes();
+            // kosongkan listview
+            lvwEmployee.Items.Clear();
+            // panggil method ReadAll dan tampung datanya ke dalam collection
+            listOfEmployee = controller.ReadAll();
+            // ekstrak objek mhs dari collection
+            foreach (var emp in listOfEmployee)
+            {
+                var noUrut = lvwEmployee.Items.Count + 1;
+                var item = new ListViewItem(noUrut.ToString());
+                item.SubItems.Add(emp.Username);
+                item.SubItems.Add(emp.Name);
+                item.SubItems.Add(emp.Password);
+                // tampilkan data mhs ke listview
+                lvwEmployee.Items.Add(item);
+            }
+        }
+
+        private void LoadDataEmployeeByClick()
         {
             // kosongkan listview
             lvwEmployee.Items.Clear();
@@ -60,6 +80,26 @@ namespace Laundry.View
                 item.SubItems.Add(emp.Password);
                 // tampilkan data mhs ke listview
                 lvwEmployee.Items.Add(item);
+            }
+            lvwEmployee.Click += new EventHandler(lvwEmployee_Click);
+        }
+
+        private void lvwEmployee_Click(object sender, EventArgs e)
+        {
+            if (lvwEmployee.SelectedItems.Count > 0)
+            {
+                // Mendapatkan item yang dipilih
+                ListViewItem selectedItem = lvwEmployee.SelectedItems[0];
+
+                // Mendapatkan data dari item yang dipilih
+                string username = selectedItem.SubItems[1].Text;
+                string name = selectedItem.SubItems[2].Text;
+                string password = selectedItem.SubItems[3].Text;
+
+                // Menampilkan data ke TextBox
+                txtUsername.Text = username;
+                txtName.Text = name;
+                txtPassword.Text = password;
             }
         }
 
@@ -106,61 +146,21 @@ namespace Laundry.View
             emp.Name = txtName.Text;
             emp.Password = txtPassword.Text;
 
-            int result = 0;
-            result = controller.Create(emp);
+            controller.Create(emp);
+            LoadDataEmployee();
+
+            ClearTextBoxes();
+
         }
 
-        private void btnPerbaiki_Click(object sender, EventArgs e)
+        private void ClearTextBoxes()
         {
-            if (lvwEmployee.SelectedItems.Count > 0)
-            {
-                // ambil objek mhs yang mau diedit dari collection
-                Employee emp = listOfEmployee[lvwEmployee.SelectedIndices[0]];
-                // buat objek form entry data mahasiswa
-                FrmEntryEmployee frmEntry = new FrmEntryEmployee("Edit Data Mahasiswa", emp, controller);
-                // mendaftarkan method event handler untuk merespon event OnUpdate
-                frmEntry.OnUpdate += OnUpdateEventHandler;
-                // tampilkan form entry mahasiswa
-                frmEntry.ShowDialog();
-            }
-            else // data belum dipilih
-            {
-                MessageBox.Show("Data belum dipilih", "Peringatan",
-               MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation);
-            }
-
+            // Bersihkan nilai teks di TextBox
+            txtUsername.Text = "";
+            txtName.Text = "";
+            txtPassword.Text = "";
         }
-
-        private void btnHapus_Click(object sender, EventArgs e)
-        {
-            if (lvwEmployee.SelectedItems.Count > 0)
-            {
-                var konfirmasi = MessageBox.Show("Apakah data mahasiswa ingin dihapus ? ", "Konfirmasi",
-               
-                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                if (konfirmasi == DialogResult.Yes)
-                {
-                    // ambil objek mhs yang mau dihapus dari collection
-                    Employee emp =
-                   listOfEmployee[lvwEmployee.SelectedIndices[0]];
-                    // panggil operasi CRUD
-                    var result = controller.Delete(emp);
-                    if (result > 0) LoadDataEmployee();
-                }
-            }
-            else // data belum dipilih
-            {
-                MessageBox.Show("Data mahasiswa belum dipilih !!!", "Peringatan",
-                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-        }
-
-        private void btnSelesai_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
+   
         private void label3_Click(object sender, EventArgs e)
         {
 
@@ -168,7 +168,6 @@ namespace Laundry.View
 
         private void FrmEmployee_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnTransaction_Click(object sender, EventArgs e)
@@ -204,6 +203,52 @@ namespace Laundry.View
             this.Hide();
             FrmEmployee frmEmployee = new FrmEmployee();
             frmEmployee.ShowDialog();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (lvwEmployee.SelectedItems.Count > 0)
+            {
+                var konfirmasi = MessageBox.Show("Apakah data employee ingin dihapus ? ", "Konfirmasi",
+
+                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (konfirmasi == DialogResult.Yes)
+                {
+                    // ambil objek mhs yang mau dihapus dari collection
+                    Employee emp =
+                   listOfEmployee[lvwEmployee.SelectedIndices[0]];
+                    // panggil operasi CRUD
+                    var result = controller.Delete(emp);
+                    if (result > 0) LoadDataEmployee();
+                }
+            }
+            else // data belum dipilih
+            {
+                MessageBox.Show("Data employee belum dipilih !!!", "Peringatan",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (lvwEmployee.SelectedItems.Count > 0)
+            {
+                LoadDataEmployeeByClick();
+                // set nilai property objek mahasiswa yg diambil dari TextBox
+                Employee emp = new Employee();
+                emp.Username = txtUsername.Text;
+                emp.Name = txtName.Text;
+                emp.Password = txtPassword.Text;
+
+                controller.Update(emp);
+                LoadDataEmployee();
+            }
+            else // data belum dipilih
+            {
+                MessageBox.Show("Data belum dipilih", "Peringatan",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+            }
         }
     }
 }

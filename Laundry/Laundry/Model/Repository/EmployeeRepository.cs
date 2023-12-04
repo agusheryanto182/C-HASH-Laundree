@@ -50,7 +50,7 @@ namespace Laundry.Model.Repository
             return result;
         }
 
-        public int Update(Employee mhs)
+        public int Update(Employee emp)
         {
             int result = 0;
 
@@ -62,9 +62,9 @@ namespace Laundry.Model.Repository
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
                 // mendaftarkan parameter dan mengeset nilainya
-                cmd.Parameters.AddWithValue("@name", mhs.Name);
-                cmd.Parameters.AddWithValue("@password", mhs.Password);
-                cmd.Parameters.AddWithValue("@username", mhs.Username);
+                cmd.Parameters.AddWithValue("@username", emp.Username);
+                cmd.Parameters.AddWithValue("@name", emp.Name);
+                cmd.Parameters.AddWithValue("@password", emp.Password);
 
                 try
                 {
@@ -158,8 +158,8 @@ namespace Laundry.Model.Repository
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select username, name 
-                               from employee 
+                string sql = @"select username, name, password 
+                               from employees 
                                where name like @name
                                order by name";
 
@@ -179,6 +179,7 @@ namespace Laundry.Model.Repository
                             Employee emp = new Employee();
                             emp.Username = dtr["username"].ToString();
                             emp.Name = dtr["name"].ToString();
+                            emp.Password = dtr["password"].ToString();
 
                             // tambahkan objek mahasiswa ke dalam collection
                             list.Add(emp);
@@ -192,6 +193,50 @@ namespace Laundry.Model.Repository
             }
 
             return list;
+        }
+
+        public Employee ReadByUsername(string username)
+        {
+            // membuat objek collection untuk menampung objek mahasiswa
+            Employee remp = new Employee();
+
+            try
+            {
+                // deklarasi perintah SQL
+                string sql = @"select username, name, password 
+                               from employees
+                               where username like @username
+                               order by username";
+
+                // membuat objek command menggunakan blok using
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
+                {
+                    // mendaftarkan parameter dan mengeset nilainya
+                    cmd.Parameters.AddWithValue("@username", string.Format("%{0}%", username));
+
+                    // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
+                    using (SQLiteDataReader dtr = cmd.ExecuteReader())
+                    {
+                        // panggil method Read untuk mendapatkan baris dari result set
+                        while (dtr.Read())
+                        {
+                            // proses konversi dari row result set ke object
+                            Employee emp = new Employee();
+                            emp.Username = dtr["username"].ToString();
+                            emp.Name = dtr["name"].ToString();
+                            emp.Password = dtr["password"].ToString();
+
+                            remp = emp;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print("ReadByUsername error: {0}", ex.Message);
+            }
+
+            return remp;
         }
     }
 }

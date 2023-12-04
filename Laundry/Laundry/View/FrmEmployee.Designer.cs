@@ -244,6 +244,7 @@
             this.btnEdit.TabIndex = 17;
             this.btnEdit.Text = "Ubah";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnDelete
             // 
@@ -255,6 +256,7 @@
             this.btnDelete.TabIndex = 18;
             this.btnDelete.Text = "Hapus";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // txtPassword
             // 

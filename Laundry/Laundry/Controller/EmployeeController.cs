@@ -34,6 +34,24 @@ namespace Laundry.Controller
             return list;
         }
 
+        public Employee ReadByUsername(string username)
+        {
+            // membuat objek collection
+            Employee emp = new Employee();
+
+            // membuat objek context menggunakan blok using
+            using (DbContext context = new DbContext())
+            {
+                // membuat objek dari class repository
+                _repository = new EmployeeRepository(context);
+
+                // panggil method ReadByNama yang ada di dalam class repository
+                emp = _repository.ReadByUsername(username);
+            }
+
+            return emp;
+        }
+
         public List<Employee> ReadAll()
         {
             // membuat objek collection
@@ -80,6 +98,15 @@ namespace Laundry.Controller
                 return 0;
             }
 
+            var r = ReadByUsername(emp.Username);
+
+            if (emp.Username == r.Username)
+            {
+                MessageBox.Show("Username telah digunakan !!!", "Peringatan",
+                      MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return 0;
+            }
+
             // membuat objek context menggunakan blok using
             using (DbContext context = new DbContext())
             {
@@ -106,7 +133,6 @@ namespace Laundry.Controller
         {
             int result = 0;
 
-            // cek npm yang diinputkan tidak boleh kosong
             if (string.IsNullOrEmpty(emp.Username))
             {
                 MessageBox.Show("Username harus diisi !!!", "Peringatan",
@@ -114,7 +140,6 @@ namespace Laundry.Controller
                 return 0;
             }
 
-            // cek nama yang diinputkan tidak boleh kosong
             if (string.IsNullOrEmpty(emp.Name))
             {
                 MessageBox.Show("Nama harus diisi !!!", "Peringatan",
@@ -122,7 +147,6 @@ namespace Laundry.Controller
                 return 0;
             }
 
-            // cek angkatan yang diinputkan tidak boleh kosong
             if (string.IsNullOrEmpty(emp.Password))
             {
                 MessageBox.Show("Password harus diisi !!!", "Peringatan",
