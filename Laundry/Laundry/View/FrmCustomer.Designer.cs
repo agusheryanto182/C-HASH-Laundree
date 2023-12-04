@@ -48,7 +48,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lvwEmployee = new System.Windows.Forms.ListView();
+            this.lvwCustomer = new System.Windows.Forms.ListView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
@@ -178,6 +178,7 @@
             this.btnDelete.TabIndex = 32;
             this.btnDelete.Text = "Hapus";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnEdit
             // 
@@ -189,6 +190,7 @@
             this.btnEdit.TabIndex = 31;
             this.btnEdit.Text = "Ubah";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // txtSearch
             // 
@@ -270,15 +272,16 @@
             this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
             // 
-            // lvwEmployee
+            // lvwCustomer
             // 
-            this.lvwEmployee.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.lvwEmployee.HideSelection = false;
-            this.lvwEmployee.Location = new System.Drawing.Point(192, 483);
-            this.lvwEmployee.Name = "lvwEmployee";
-            this.lvwEmployee.Size = new System.Drawing.Size(836, 253);
-            this.lvwEmployee.TabIndex = 28;
-            this.lvwEmployee.UseCompatibleStateImageBehavior = false;
+            this.lvwCustomer.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.lvwCustomer.HideSelection = false;
+            this.lvwCustomer.Location = new System.Drawing.Point(192, 483);
+            this.lvwCustomer.Name = "lvwCustomer";
+            this.lvwCustomer.Size = new System.Drawing.Size(836, 253);
+            this.lvwCustomer.TabIndex = 28;
+            this.lvwCustomer.UseCompatibleStateImageBehavior = false;
+            this.lvwCustomer.SelectedIndexChanged += new System.EventHandler(this.lvwEmployee_SelectedIndexChanged);
             // 
             // btnAdd
             // 
@@ -290,6 +293,7 @@
             this.btnAdd.TabIndex = 27;
             this.btnAdd.Text = "Tambah";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnSearch
             // 
@@ -319,7 +323,7 @@
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.txtSearch);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.lvwEmployee);
+            this.Controls.Add(this.lvwCustomer);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.groupBox2);
@@ -357,7 +361,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ListView lvwEmployee;
+        private System.Windows.Forms.ListView lvwCustomer;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnSearch;
     }

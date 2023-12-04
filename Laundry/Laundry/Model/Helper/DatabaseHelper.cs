@@ -21,6 +21,7 @@ namespace Laundry.Model.Helper
 
                 using (var connection = new SQLiteConnection(connectionString))
                 {
+                    connection.Open();  
 
                     // membuat tabel
                     string createEmployeesTableQuery = @"
@@ -36,13 +37,13 @@ namespace Laundry.Model.Helper
                     id INT PRIMARY KEY,
                     name VARCHAR(255),
                     address VARCHAR(255),
-                    phone_number INT(15),
+                    phone_number VARCHAR(255),
                     created_at TIMESTAMP,
                     updated_at TIMESTAMP
                     );";
 
                     string createServicesTableQuery = @"
-                    CREATE TABLE IF NOT EXISTS customers (
+                    CREATE TABLE IF NOT EXISTS services (
                     id INT PRIMARY KEY,
                     name VARCHAR(255),
                     address VARCHAR(255),
