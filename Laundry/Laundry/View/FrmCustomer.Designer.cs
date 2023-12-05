@@ -51,6 +51,8 @@
             this.lvwCustomer = new System.Windows.Forms.ListView();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblNoPelanggan = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -119,21 +121,21 @@
             // 
             // txtHP
             // 
-            this.txtHP.Location = new System.Drawing.Point(488, 309);
+            this.txtHP.Location = new System.Drawing.Point(503, 337);
             this.txtHP.Name = "txtHP";
             this.txtHP.Size = new System.Drawing.Size(273, 22);
             this.txtHP.TabIndex = 38;
             // 
             // txtAddress
             // 
-            this.txtAddress.Location = new System.Drawing.Point(488, 267);
+            this.txtAddress.Location = new System.Drawing.Point(503, 295);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(273, 22);
             this.txtAddress.TabIndex = 37;
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(488, 226);
+            this.txtName.Location = new System.Drawing.Point(503, 254);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(273, 22);
             this.txtName.TabIndex = 36;
@@ -142,7 +144,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(358, 311);
+            this.label1.Location = new System.Drawing.Point(373, 339);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(85, 18);
             this.label1.TabIndex = 35;
@@ -152,7 +154,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(358, 266);
+            this.label4.Location = new System.Drawing.Point(373, 294);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 18);
             this.label4.TabIndex = 34;
@@ -162,7 +164,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(358, 227);
+            this.label5.Location = new System.Drawing.Point(373, 255);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 18);
             this.label5.TabIndex = 33;
@@ -308,11 +310,32 @@
             this.btnSearch.Text = "Cari";
             this.btnSearch.UseVisualStyleBackColor = false;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(373, 216);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(101, 18);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "No Pelanggan";
+            // 
+            // lblNoPelanggan
+            // 
+            this.lblNoPelanggan.AutoSize = true;
+            this.lblNoPelanggan.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNoPelanggan.Location = new System.Drawing.Point(500, 216);
+            this.lblNoPelanggan.Name = "lblNoPelanggan";
+            this.lblNoPelanggan.Size = new System.Drawing.Size(0, 18);
+            this.lblNoPelanggan.TabIndex = 40;
+            // 
             // FrmCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1040, 748);
+            this.Controls.Add(this.lblNoPelanggan);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.txtHP);
             this.Controls.Add(this.txtAddress);
             this.Controls.Add(this.txtName);
@@ -364,5 +387,7 @@
         private System.Windows.Forms.ListView lvwCustomer;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblNoPelanggan;
     }
 }

@@ -34,7 +34,8 @@ namespace Laundry.Model.Helper
 
                     string createCustomersTableQuery = @"
                     CREATE TABLE IF NOT EXISTS customers (
-                    id INT PRIMARY KEY,
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_pelanggan VARCHAR(255),
                     name VARCHAR(255),
                     address VARCHAR(255),
                     phone_number VARCHAR(255),
@@ -44,7 +45,7 @@ namespace Laundry.Model.Helper
 
                     string createServicesTableQuery = @"
                     CREATE TABLE IF NOT EXISTS services (
-                    id INT PRIMARY KEY,
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name VARCHAR(255),
                     price INT,
                     duration VARCHAR(255),
@@ -54,7 +55,7 @@ namespace Laundry.Model.Helper
 
                     string createTransactionsTableQuery = @"
                     CREATE TABLE IF NOT EXISTS transactions (
-                    id INT PRIMARY KEY,
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                     employee_id INT,
                     customer_id INT,
                     service_id INT,
@@ -72,7 +73,7 @@ namespace Laundry.Model.Helper
 
                     string createItemsTableQuery = @"
                     CREATE TABLE IF NOT EXISTS items (
-                    id INT PRIMARY KEY,
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                     transaction_id INT,
                     item_type VARCHAR(255),
                     quantity INT,
@@ -81,7 +82,7 @@ namespace Laundry.Model.Helper
 
                     string createIncomesTableQuery = @"
                     CREATE TABLE IF NOT EXISTS incomes (
-                    id INT PRIMARY KEY,
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                     employee_id INT,
                     date DATE,
                     total INT,

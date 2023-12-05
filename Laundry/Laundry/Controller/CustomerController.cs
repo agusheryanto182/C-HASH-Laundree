@@ -15,6 +15,22 @@ namespace Laundry.Controller
         // deklarasi objek Repository untuk menjalankan operasi CRUD
         private CustomerRepository _repository;
 
+        public Customer ReadByData(Customer cs)
+        {
+            Customer rc = new Customer();
+            // membuat objek context menggunakan blok using
+            using (DbContext context = new DbContext())
+            {
+                // membuat objek dari class repository
+                _repository = new CustomerRepository(context);
+
+                // panggil method ReadByNama yang ada di dalam class repository
+                rc = _repository.ReadByData(cs);
+            }
+
+            return rc;
+        }
+
         public List<Customer> ReadByName(string name)
         {
             // membuat objek collection

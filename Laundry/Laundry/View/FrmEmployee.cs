@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Laundry.Model.Entity;
 using Laundry.Controller;
+using System.Xml.Linq;
 
 namespace Laundry.View
 {
@@ -28,7 +29,6 @@ namespace Laundry.View
             controller = new EmployeeController();
             InisialisasiListView();
             LoadDataEmployee ();
-            LoadDataEmployeeByClick();
         }
 
         // atur kolom listview
@@ -84,6 +84,25 @@ namespace Laundry.View
             lvwEmployee.Click += new EventHandler(lvwEmployee_Click);
         }
 
+        private void LoadDataEmployeeByName(string name)
+        {
+            // kosongkan listview
+            lvwEmployee.Items.Clear();
+            // panggil method ReadAll dan tampung datanya ke dalam collection
+            listOfEmployee = controller.ReadByName(name);
+            // ekstrak objek mhs dari collection
+            foreach (var emp in listOfEmployee)
+            {
+                var noUrut = lvwEmployee.Items.Count + 1;
+                var item = new ListViewItem(noUrut.ToString());
+                item.SubItems.Add(emp.Username);
+                item.SubItems.Add(emp.Name);
+                item.SubItems.Add(emp.Password);
+                // tampilkan data mhs ke listview
+                lvwEmployee.Items.Add(item);
+            }
+        }
+
         private void lvwEmployee_Click(object sender, EventArgs e)
         {
             if (lvwEmployee.SelectedItems.Count > 0)
@@ -134,6 +153,7 @@ namespace Laundry.View
             txtUsername.Text = "";
             txtName.Text = "";
             txtPassword.Text = "";
+            txtSearch.Text = "";
         }
    
         private void label3_Click(object sender, EventArgs e)
@@ -223,6 +243,30 @@ namespace Laundry.View
                 MessageBox.Show("Data belum dipilih", "Peringatan",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            var name = txtSearch.Text;
+
+            // Check if the name is null or empty
+            if (!string.IsNullOrEmpty(name))
+            {
+                try
+                {
+                    LoadDataEmployeeByName(name);
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception (display a message, log, etc.)
+                    MessageBox.Show($"Error loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                // Inform the user that the name is required
+                MessageBox.Show("Please enter a name.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
