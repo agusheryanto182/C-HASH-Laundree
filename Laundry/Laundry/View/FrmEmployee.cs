@@ -29,6 +29,7 @@ namespace Laundry.View
             controller = new EmployeeController();
             InisialisasiListView();
             LoadDataEmployee ();
+            LoadDataEmployeeByClick();
         }
 
         // atur kolom listview
@@ -268,6 +269,11 @@ namespace Laundry.View
                 // Inform the user that the name is required
                 MessageBox.Show("Please enter a name.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

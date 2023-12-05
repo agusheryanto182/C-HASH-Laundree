@@ -29,10 +29,6 @@ namespace Laundry.Model.Repository
             {
                 int customerCount = Convert.ToInt32(countCmd.ExecuteScalar());
 
-                if (customerCount == 0)
-                    {
-                    customerCount = customerCount + 1;
-                }
                 return customerCount;
             }
         }
@@ -110,19 +106,19 @@ namespace Laundry.Model.Repository
             return result;
         }
 
-        public int Delete(Customer cs)
+        public int Delete(string idPelanggan)
         {
             int result = 0;
 
             // deklarasi perintah SQL
             string sql = @"delete from customers
-                           where name = @name";
+                           where id_pelanggan = @id_pelanggan";
 
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
                 // mendaftarkan parameter dan mengeset nilainya
-                cmd.Parameters.AddWithValue("@name", cs.Name);
+                cmd.Parameters.AddWithValue("@id_pelanggan", idPelanggan);
 
                 try
                 {

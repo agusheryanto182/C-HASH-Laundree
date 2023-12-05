@@ -156,16 +156,9 @@ namespace Laundry.Controller
             return result;
         }
 
-        public int Delete(Customer cs)
+        public int Delete(string idPelanggan)
         {
             int result = 0;
-
-            if (string.IsNullOrEmpty(cs.Name))
-            {
-                MessageBox.Show("Name harus diisi !!!", "Peringatan",
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return 0;
-            }
 
             // membuat objek context menggunakan blok using
             using (DbContext context = new DbContext())
@@ -174,7 +167,7 @@ namespace Laundry.Controller
                 _repository = new CustomerRepository(context);
 
                 // panggil method Delete class repository untuk menghapus data
-                result = _repository.Delete(cs);
+                result = _repository.Delete(idPelanggan);
             }
 
             if (result > 0)

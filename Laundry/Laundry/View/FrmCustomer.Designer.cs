@@ -309,6 +309,7 @@
             this.btnSearch.TabIndex = 26;
             this.btnSearch.Text = "Cari";
             this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // label6
             // 

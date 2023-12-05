@@ -124,6 +124,26 @@ namespace Laundry.View
             lvwCustomer.Click += new EventHandler(lvwCustomer_Click);
         }
 
+        private void LoadDataCustomerByName(string name)
+        {
+            // kosongkan listview
+            lvwCustomer.Items.Clear();
+            // panggil method ReadAll dan tampung datanya ke dalam collection
+            LC = controller.ReadByName(name);
+            // ekstrak objek mhs dari collection
+            foreach (var c in LC)
+            {
+                var noUrut = lvwCustomer.Items.Count + 1;
+                var item = new ListViewItem(noUrut.ToString());
+                item.SubItems.Add(c.IdPelanggan);
+                item.SubItems.Add(c.Name);
+                item.SubItems.Add(c.Address);
+                item.SubItems.Add(c.PhoneNumber);
+                // tampilkan data mhs ke listview
+                lvwCustomer.Items.Add(item);
+            }
+        }
+
 
         private void lvwCustomer_Click(object sender, EventArgs e)
         {
@@ -204,11 +224,8 @@ namespace Laundry.View
                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (konfirmasi == DialogResult.Yes)
                 {
-                    // ambil objek mhs yang mau dihapus dari collection
-                    Customer emp =
-                   LC[lvwCustomer.SelectedIndices[0]];
-                    // panggil operasi CRUD
-                    var result = controller.Delete(emp);
+                    var idPelanggan = lblNoPelanggan.Text;
+                    var result = controller.Delete(idPelanggan);
                     if (result > 0) LoadDataCustomer();
                 }
             }
@@ -222,6 +239,30 @@ namespace Laundry.View
         private void lvwEmployee_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            var name = txtSearch.Text;
+
+            // Check if the name is null or empty
+            if (!string.IsNullOrEmpty(name))
+            {
+                try
+                {
+                    LoadDataCustomerByName(name);
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception (display a message, log, etc.)
+                    MessageBox.Show($"Error loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                // Inform the user that the name is required
+                MessageBox.Show("Please enter a name.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
