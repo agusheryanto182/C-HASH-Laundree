@@ -46,8 +46,8 @@ namespace Laundry.Model.Helper
                     CREATE TABLE IF NOT EXISTS services (
                     id INT PRIMARY KEY,
                     name VARCHAR(255),
-                    address VARCHAR(255),
-                    phone_number INT(15),
+                    price INT,
+                    duration VARCHAR(255),
                     created_at TIMESTAMP,
                     updated_at TIMESTAMP
                     );";
@@ -139,6 +139,8 @@ namespace Laundry.Model.Helper
                     }
                 }
             }
+
+
         }
     }
 }

@@ -103,31 +103,6 @@ namespace Laundry.View
             }
         }
 
-        // method event handler untuk merespon event OnCreate,
-        private void OnCreateEventHandler(Employee emp)
-        {
-            // tambahkan objek mhs yang baru ke dalam collection
-            listOfEmployee.Add(emp);
-            int noUrut = lvwEmployee.Items.Count + 1;
-            // tampilkan data mhs yg baru ke list view
-            ListViewItem item = new ListViewItem(noUrut.ToString());
-            item.SubItems.Add(emp.Username);
-            item.SubItems.Add(emp.Name);
-            item.SubItems.Add(emp.Password);
-            lvwEmployee.Items.Add(item);
-        }
-        // method event handler untuk merespon event OnUpdate,
-        private void OnUpdateEventHandler(Employee emp)
-        {
-            // ambil index data mhs yang edit
-            int index = lvwEmployee.SelectedIndices[0];
-            // update informasi mhs di listview
-            ListViewItem itemRow = lvwEmployee.Items[index];
-            itemRow.SubItems[1].Text = emp.Username;
-            itemRow.SubItems[2].Text = emp.Name;
-            itemRow.SubItems[3].Text = emp.Password;
-        }
-
         private void label1_Click(object sender, EventArgs e)
         {
 

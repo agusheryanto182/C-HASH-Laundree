@@ -34,7 +34,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lvwEmployee = new System.Windows.Forms.ListView();
+            this.lvwService = new System.Windows.Forms.ListView();
             this.btnEdit = new System.Windows.Forms.Button();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -67,6 +67,7 @@
             this.btnDelete.TabIndex = 46;
             this.btnDelete.Text = "Hapus";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // groupBox1
             // 
@@ -112,15 +113,16 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // lvwEmployee
+            // lvwService
             // 
-            this.lvwEmployee.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.lvwEmployee.HideSelection = false;
-            this.lvwEmployee.Location = new System.Drawing.Point(192, 483);
-            this.lvwEmployee.Name = "lvwEmployee";
-            this.lvwEmployee.Size = new System.Drawing.Size(836, 253);
-            this.lvwEmployee.TabIndex = 42;
-            this.lvwEmployee.UseCompatibleStateImageBehavior = false;
+            this.lvwService.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.lvwService.HideSelection = false;
+            this.lvwService.Location = new System.Drawing.Point(192, 483);
+            this.lvwService.Name = "lvwService";
+            this.lvwService.Size = new System.Drawing.Size(836, 253);
+            this.lvwService.TabIndex = 42;
+            this.lvwService.UseCompatibleStateImageBehavior = false;
+            this.lvwService.SelectedIndexChanged += new System.EventHandler(this.lvwService_SelectedIndexChanged);
             // 
             // btnEdit
             // 
@@ -132,6 +134,7 @@
             this.btnEdit.TabIndex = 45;
             this.btnEdit.Text = "Ubah";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // txtSearch
             // 
@@ -240,6 +243,7 @@
             this.btnAdd.TabIndex = 41;
             this.btnAdd.Text = "Tambah";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnSearch
             // 
@@ -323,7 +327,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.lvwEmployee);
+            this.Controls.Add(this.lvwService);
             this.Controls.Add(this.txtDuration);
             this.Controls.Add(this.txtPrice);
             this.Controls.Add(this.txtName);
@@ -355,7 +359,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ListView lvwEmployee;
+        private System.Windows.Forms.ListView lvwService;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.GroupBox groupBox2;

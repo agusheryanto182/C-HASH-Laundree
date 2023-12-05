@@ -56,7 +56,7 @@ namespace Laundry.Model.Repository
             int result = 0;
 
             // deklarasi perintah SQL
-            string sql = @"update customers address = @address, phone_number = @phone_number
+            string sql = @"update customers SET address = @address, phone_number = @phone_number
                            where name = @name";
 
             // membuat objek command menggunakan blok using
