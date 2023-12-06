@@ -17,6 +17,12 @@ namespace Laundry.Controller
     {
         private LoginRepository _loginRepository;
 
+        public string informationUser (string name)
+        {
+            var result = name;
+            return result;
+        }
+
         public bool PerformLogin(Employee emp)
         {
             bool result = false;

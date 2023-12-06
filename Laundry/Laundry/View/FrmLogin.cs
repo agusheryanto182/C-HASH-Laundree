@@ -16,6 +16,7 @@ namespace Laundry.View
     public partial class FrmLogin : Form
 
     {
+        public string EnteredUsername { get; private set; }
         private LoginController controller;
         public FrmLogin()
         {
@@ -36,6 +37,7 @@ namespace Laundry.View
             bool result = controller.PerformLogin(emp);
             if (result) 
             {
+                EnteredUsername = txtUsername.Text;
                 this.Close();
             } else
             {
@@ -49,6 +51,11 @@ namespace Laundry.View
         private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void txtUsername_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

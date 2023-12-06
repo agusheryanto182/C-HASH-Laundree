@@ -39,7 +39,7 @@ namespace Laundry.Model.Repository
             int newCustomerIdNumber = currentCustomerCount + 1;
 
             // Format ID pelanggan sesuai dengan keinginan Anda (misalnya, "ID-PEL001")
-            string newCustomerId = "ID-CUST-" + newCustomerIdNumber + "-LAUNDREE";
+            string newCustomerId = "ID-CS-" + newCustomerIdNumber + "-LAUNDREE";
 
             return newCustomerId;
         }
