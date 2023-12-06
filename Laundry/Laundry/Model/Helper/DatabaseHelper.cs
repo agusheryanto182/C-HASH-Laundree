@@ -26,7 +26,7 @@ namespace Laundry.Model.Helper
                     // membuat tabel
                     string createEmployeesTableQuery = @"
                     CREATE TABLE IF NOT EXISTS employees (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id VARCHAR(255) PRIMARY KEY,
                     username VARCHAR(50) NOT NULL,
                     name VARCHAR(255) NOT NULL,
                     password VARCHAR(100) NOT NULL
@@ -59,9 +59,7 @@ namespace Laundry.Model.Helper
                     customer_id INT,
                     service_id INT,
                     weight INT,
-                    order_date DATE,
-                    finish_time DATETIME,
-                    status VARCHAR(50),
+                    status VARCHAR(255),
                     total INT,
                     created_at TIMESTAMP,
                     updated_at TIMESTAMP,

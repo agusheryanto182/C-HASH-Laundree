@@ -162,17 +162,7 @@ namespace Laundry.Model.Repository
                             // proses konversi dari row result set ke object
                             Transactions t = new Transactions();
                             t.Id = dtr["id"].ToString();
-
-                            int employeeId;
-                            if (int.TryParse(dtr["employee_id"].ToString(), out employeeId))
-                            {
-                                t.EmployeeId = employeeId;
-                            }
-                            else
-                            {
-                                t.EmployeeId = 0; 
-                            }
-
+                            t.EmployeeId = dtr["employee_id"].ToString();
                             t.CustomerId = dtr["address"].ToString();
                             t.ServiceId = dtr["phone_number"].ToString();
 
@@ -213,24 +203,23 @@ namespace Laundry.Model.Repository
         }
 
         // Method untuk menampilkan data mahasiwa berdasarkan pencarian nama
-        public List<Customer> ReadByName(string name)
+        public List<Transactions> ReadByName(string id)
         {
             // membuat objek collection untuk menampung objek mahasiswa
-            List<Customer> list = new List<Customer>();
+            List<Transactions> list = new List<Transactions>();
 
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select id, name, address, phone_number 
-                               from customers
-                               where name like @name
-                               order by name";
+                string sql = @"select id, employee_id, customer_id, service_id, weight, status, total 
+                               from transactions
+                               where id like @id";
 
                 // membuat objek command menggunakan blok using
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
                 {
                     // mendaftarkan parameter dan mengeset nilainya
-                    cmd.Parameters.AddWithValue("@name", string.Format("%{0}%", name));
+                    cmd.Parameters.AddWithValue("@id", string.Format("%{0}%", id));
 
                     // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
                     using (SQLiteDataReader dtr = cmd.ExecuteReader())
@@ -239,14 +228,36 @@ namespace Laundry.Model.Repository
                         while (dtr.Read())
                         {
                             // proses konversi dari row result set ke object
-                            Customer cs = new Customer();
-                            cs.Id = dtr["id"].ToString();
-                            cs.Name = dtr["name"].ToString();
-                            cs.Address = dtr["address"].ToString();
-                            cs.PhoneNumber = dtr["phone_number"].ToString();
+                            Transactions t = new Transactions();
+                            t.Id = dtr["id"].ToString();
+                            t.EmployeeId = dtr["employee_id"].ToString();
+                            t.CustomerId = dtr["customer_id"].ToString();
+                            t.ServiceId = dtr["service_id"].ToString();
+
+                            int weight;
+                            if (int.TryParse(dtr["employee_id"].ToString(), out weight))
+                            {
+                                t.Weight = weight;
+                            }
+                            else
+                            {
+                                t.Weight = 0;
+                            }
+
+                            t.Status = dtr["status"].ToString();
+
+                            float total;
+                            if (float.TryParse(dtr["employee_id"].ToString(), out total))
+                            {
+                                t.Weight = weight;
+                            }
+                            else
+                            {
+                                t.Total = 0;
+                            }
 
                             // tambahkan objek mahasiswa ke dalam collection
-                            list.Add(cs);
+                            list.Add(t);
                         }
                     }
                 }

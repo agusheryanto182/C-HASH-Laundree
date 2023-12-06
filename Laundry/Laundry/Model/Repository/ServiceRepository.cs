@@ -21,6 +21,56 @@ namespace Laundry.Model.Repository
             _conn = context.Conn;
         }
 
+        public Service ReadById(string id)
+        {
+            Service s = new Service();
+
+            try
+            {
+                // deklarasi perintah SQL
+                string sql = @"select id, name, price, duration 
+                               from services
+                               where id = @id";
+
+                // membuat objek command menggunakan blok using
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
+                {
+                    // mendaftarkan parameter dan mengeset nilainya
+                    cmd.Parameters.AddWithValue("@id", string.Format("%{0}%", id));
+
+                    // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
+                    using (SQLiteDataReader dtr = cmd.ExecuteReader())
+                    {
+                        // panggil method Read untuk mendapatkan baris dari result set
+                        while (dtr.Read())
+                        {
+                            s.Id = dtr["id"].ToString();
+                            s.Name = dtr["name"].ToString();
+
+                            // Konversi nilai "price" ke tipe data int
+                            float price;
+                            if (float.TryParse(dtr["price"].ToString(), out price))
+                            {
+                                s.Price = price;
+                            }
+                            else
+                            {
+                                s.Price = 0; // Nilai default jika konversi gagal
+                            }
+
+                            s.Duration = dtr["Duration"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print("ReadByName error: {0}", ex.Message);
+            }
+
+            return s;
+        }
+
         private int GetServiceCount()
         {
             string countSql = "SELECT COUNT(*) FROM services";
@@ -39,7 +89,7 @@ namespace Laundry.Model.Repository
             int newServiceIdNumber = currentServiceCount + 1;
 
             // Format ID pelanggan sesuai dengan keinginan Anda (misalnya, "ID-PEL001")
-            string result = "ID-SERV-" + newServiceIdNumber + "-LAUNDREE";
+            string result = "ID-SV-" + newServiceIdNumber + "-LAUNDREE";
 
             return result;
         }

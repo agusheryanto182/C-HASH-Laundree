@@ -20,18 +20,41 @@ namespace Laundry.Model.Repository
             _conn = context.Conn;
         }
 
+        private int GetCount()
+        {
+            string countSql = "SELECT COUNT(*) FROM employees";
+
+            using (SQLiteCommand countCmd = new SQLiteCommand(countSql, _conn))
+            {
+                int c = Convert.ToInt32(countCmd.ExecuteScalar());
+
+                return c;
+            }
+        }
+
+        private string GenerateId()
+        {
+            int c = GetCount();
+            int r = c + 1;
+
+            string n = "ID-EMP-" + r + "-LAUNDREE";
+
+            return n;
+        }
+
         public int Create(Employee emp)
         {
             int result = 0;
 
             // deklarasi perintah SQL
-            string sql = @"insert into employees (username, name, password)
-                           values (@username, @name, @password)";
+            string sql = @"insert into employees (id, username, name, password)
+                           values (@id, @username, @name, @password)";
 
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
                 // mendaftarkan parameter dan mengeset nilainya
+                cmd.Parameters.AddWithValue("@id", emp.Id);
                 cmd.Parameters.AddWithValue("@username", emp.Username);
                 cmd.Parameters.AddWithValue("@name", emp.Name);
                 cmd.Parameters.AddWithValue("@password", emp.Password);

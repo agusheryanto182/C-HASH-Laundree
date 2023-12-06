@@ -61,6 +61,7 @@
     <Compile Include="Model\Entity\Customer.cs" />
     <Compile Include="Model\Entity\Employee.cs" />
     <Compile Include="Model\Entity\Service.cs" />
+    <Compile Include="Model\Entity\Transactions.cs" />
     <Compile Include="Model\Helper\DatabaseHelper.cs" />
     <Compile Include="Model\Repository\CustomerRepository.cs" />
     <Compile Include="Model\Repository\EmployeeRepository.cs" />
