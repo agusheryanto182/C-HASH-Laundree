@@ -39,7 +39,7 @@ namespace Laundry.Model.Repository
             int newCustomerIdNumber = currentCustomerCount + 1;
 
             // Format ID pelanggan sesuai dengan keinginan Anda (misalnya, "ID-PEL001")
-            string newCustomerId = "ID-PEL-" + newCustomerIdNumber + "LAUNDREE";
+            string newCustomerId = "ID-CUST-" + newCustomerIdNumber + "-LAUNDREE";
 
             return newCustomerId;
         }
@@ -49,15 +49,15 @@ namespace Laundry.Model.Repository
             int result = 0;
 
             // deklarasi perintah SQL
-            string sql = @"insert into customers (id_pelanggan, name, address, phone_number)
-                   values (@id_pelanggan, @name, @address, @phone_number)";
+            string sql = @"insert into customers (id, name, address, phone_number)
+                   values (@id, @name, @address, @phone_number)";
 
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
                 string newCustomerId = GenerateCustomerId();
 
-                cmd.Parameters.AddWithValue("@id_pelanggan", newCustomerId);
+                cmd.Parameters.AddWithValue("@id", newCustomerId);
                 cmd.Parameters.AddWithValue("@name", cs.Name);
                 cmd.Parameters.AddWithValue("@address", cs.Address);
                 cmd.Parameters.AddWithValue("@phone_number", cs.PhoneNumber);
@@ -81,13 +81,13 @@ namespace Laundry.Model.Repository
 
             // deklarasi perintah SQL
             string sql = @"update customers SET name = @name, address = @address, phone_number = @phone_number
-                           where id_pelanggan = @id_pelanggan";
+                           where id = @id";
 
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
                 // mendaftarkan parameter dan mengeset nilainya
-                cmd.Parameters.AddWithValue("@id_pelanggan", cs.IdPelanggan);
+                cmd.Parameters.AddWithValue("@id", cs.Id);
                 cmd.Parameters.AddWithValue("@name", cs.Name);
                 cmd.Parameters.AddWithValue("@address", cs.Address);
                 cmd.Parameters.AddWithValue("@phone_number", cs.PhoneNumber);
@@ -106,19 +106,19 @@ namespace Laundry.Model.Repository
             return result;
         }
 
-        public int Delete(string idPelanggan)
+        public int Delete(string id)
         {
             int result = 0;
 
             // deklarasi perintah SQL
             string sql = @"delete from customers
-                           where id_pelanggan = @id_pelanggan";
+                           where id = @id";
 
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
                 // mendaftarkan parameter dan mengeset nilainya
-                cmd.Parameters.AddWithValue("@id_pelanggan", idPelanggan);
+                cmd.Parameters.AddWithValue("@id", id);
 
                 try
                 {
@@ -142,7 +142,7 @@ namespace Laundry.Model.Repository
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select id_pelanggan, name, address, phone_number
+                string sql = @"select id, name, address, phone_number
                                from customers";
 
                 // membuat objek command menggunakan blok using
@@ -156,7 +156,7 @@ namespace Laundry.Model.Repository
                         {
                             // proses konversi dari row result set ke object
                             Customer cs = new Customer();
-                            cs.IdPelanggan = dtr["id_pelanggan"].ToString();
+                            cs.Id = dtr["id"].ToString();
                             cs.Name = dtr["name"].ToString();
                             cs.Address = dtr["address"].ToString();
                             cs.PhoneNumber = dtr["phone_number"].ToString();
@@ -184,7 +184,7 @@ namespace Laundry.Model.Repository
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select name, address, phone_number 
+                string sql = @"select id, name, address, phone_number 
                                from customers
                                where name like @name
                                order by name";
@@ -203,6 +203,7 @@ namespace Laundry.Model.Repository
                         {
                             // proses konversi dari row result set ke object
                             Customer cs = new Customer();
+                            cs.Id = dtr["id"].ToString();
                             cs.Name = dtr["name"].ToString();
                             cs.Address = dtr["address"].ToString();
                             cs.PhoneNumber = dtr["phone_number"].ToString();
@@ -220,48 +221,5 @@ namespace Laundry.Model.Repository
 
             return list;
         }
-
-        public Customer ReadByData(Customer cs)
-        {
-            Customer rc = new Customer();
-
-            try
-            {
-                // deklarasi perintah SQL
-                string sql = @"select id, name, address, phone_number 
-                               from customers
-                               where name = @name AND address = @address AND phone_number = @phone_number";
-
-                // membuat objek command menggunakan blok using
-                using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
-                {
-                    // mendaftarkan parameter dan mengeset nilainya
-                    cmd.Parameters.AddWithValue("@name", string.Format("%{0}%", cs.Name));
-                    cmd.Parameters.AddWithValue("@address", string.Format("%{0}%", cs.Address));
-                    cmd.Parameters.AddWithValue("@phone_number", string.Format("%{0}%", cs.PhoneNumber));
-
-                    // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
-                    using (SQLiteDataReader dtr = cmd.ExecuteReader())
-                    {
-                        // panggil method Read untuk mendapatkan baris dari result set
-                        while (dtr.Read())
-                        {
-                            rc.IdPelanggan = dtr["id"].ToString();   
-                            rc.Name = dtr["name"].ToString();
-                            rc.Address = dtr["address"].ToString();
-                            rc.PhoneNumber = dtr["phone_number"].ToString();
-
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.Print("ReadByName error: {0}", ex.Message);
-            }
-
-            return rc;
-        }
-
     }
 }

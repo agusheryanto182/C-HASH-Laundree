@@ -94,7 +94,7 @@ namespace Laundry.View
             {
                 var noUrut = lvwCustomer.Items.Count + 1;
                 var item = new ListViewItem(noUrut.ToString());
-                item.SubItems.Add(cs.IdPelanggan);
+                item.SubItems.Add(cs.Id);
                 item.SubItems.Add(cs.Name);
                 item.SubItems.Add(cs.Address);
                 item.SubItems.Add(cs.PhoneNumber);
@@ -114,7 +114,7 @@ namespace Laundry.View
             {
                 var noUrut = lvwCustomer.Items.Count + 1;
                 var item = new ListViewItem(noUrut.ToString());
-                item.SubItems.Add(cs.IdPelanggan);
+                item.SubItems.Add(cs.Id);
                 item.SubItems.Add(cs.Name);
                 item.SubItems.Add(cs.Address);
                 item.SubItems.Add(cs.PhoneNumber);
@@ -135,7 +135,7 @@ namespace Laundry.View
             {
                 var noUrut = lvwCustomer.Items.Count + 1;
                 var item = new ListViewItem(noUrut.ToString());
-                item.SubItems.Add(c.IdPelanggan);
+                item.SubItems.Add(c.Id);
                 item.SubItems.Add(c.Name);
                 item.SubItems.Add(c.Address);
                 item.SubItems.Add(c.PhoneNumber);
@@ -153,13 +153,13 @@ namespace Laundry.View
                 ListViewItem selectedItem = lvwCustomer.SelectedItems[0];
                 Customer cs = new Customer();
                 // Mendapatkan data dari item yang dipilih
-                cs.IdPelanggan = selectedItem.SubItems[1].Text;
+                cs.Id = selectedItem.SubItems[1].Text;
                 cs.Name = selectedItem.SubItems[2].Text;
                 cs.Address = selectedItem.SubItems[3].Text;
                 cs.PhoneNumber = selectedItem.SubItems[4].Text;
 
                 // Menampilkan data ke TextBox
-                lblNoPelanggan.Text = cs.IdPelanggan;
+                lblNoPelanggan.Text = cs.Id;
                 txtName.Text = cs.Name;
                 txtAddress.Text = cs.Address;
                 txtHP.Text = cs.PhoneNumber;
@@ -198,7 +198,7 @@ namespace Laundry.View
                 LoadDataCustomerByClick();
                 // set nilai property objek mahasiswa yg diambil dari TextBox
                 Customer cs = new Customer();
-                cs.IdPelanggan = lblNoPelanggan.Text;
+                cs.Id = lblNoPelanggan.Text;
                 cs.Name = txtName.Text;
                 cs.Address = txtAddress.Text;
                 cs.PhoneNumber = txtHP.Text;

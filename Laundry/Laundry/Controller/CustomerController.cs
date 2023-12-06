@@ -15,22 +15,6 @@ namespace Laundry.Controller
         // deklarasi objek Repository untuk menjalankan operasi CRUD
         private CustomerRepository _repository;
 
-        public Customer ReadByData(Customer cs)
-        {
-            Customer rc = new Customer();
-            // membuat objek context menggunakan blok using
-            using (DbContext context = new DbContext())
-            {
-                // membuat objek dari class repository
-                _repository = new CustomerRepository(context);
-
-                // panggil method ReadByNama yang ada di dalam class repository
-                rc = _repository.ReadByData(cs);
-            }
-
-            return rc;
-        }
-
         public List<Customer> ReadByName(string name)
         {
             // membuat objek collection
@@ -120,6 +104,13 @@ namespace Laundry.Controller
         {
             int result = 0;
 
+            if (string.IsNullOrEmpty(cs.Name))
+            {
+                MessageBox.Show("Nama harus diisi !!!", "Peringatan",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return 0;
+            }
+
             if (string.IsNullOrEmpty(cs.Address))
             {
                 MessageBox.Show("Alamat harus diisi !!!", "Peringatan",
@@ -156,7 +147,7 @@ namespace Laundry.Controller
             return result;
         }
 
-        public int Delete(string idPelanggan)
+        public int Delete(string id)
         {
             int result = 0;
 
@@ -167,7 +158,7 @@ namespace Laundry.Controller
                 _repository = new CustomerRepository(context);
 
                 // panggil method Delete class repository untuk menghapus data
-                result = _repository.Delete(idPelanggan);
+                result = _repository.Delete(id);
             }
 
             if (result > 0)

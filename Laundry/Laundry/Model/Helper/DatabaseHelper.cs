@@ -34,8 +34,7 @@ namespace Laundry.Model.Helper
 
                     string createCustomersTableQuery = @"
                     CREATE TABLE IF NOT EXISTS customers (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    id_pelanggan VARCHAR(255),
+                    id VARCHAR(255) PRIMARY KEY,
                     name VARCHAR(255),
                     address VARCHAR(255),
                     phone_number VARCHAR(255),
@@ -45,9 +44,9 @@ namespace Laundry.Model.Helper
 
                     string createServicesTableQuery = @"
                     CREATE TABLE IF NOT EXISTS services (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id VARCHAR(255) PRIMARY KEY,
                     name VARCHAR(255),
-                    price INT,
+                    price FLOAT,
                     duration VARCHAR(255),
                     created_at TIMESTAMP,
                     updated_at TIMESTAMP
@@ -55,7 +54,7 @@ namespace Laundry.Model.Helper
 
                     string createTransactionsTableQuery = @"
                     CREATE TABLE IF NOT EXISTS transactions (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id VARCHAR(255) PRIMARY KEY,
                     employee_id INT,
                     customer_id INT,
                     service_id INT,
@@ -73,7 +72,7 @@ namespace Laundry.Model.Helper
 
                     string createItemsTableQuery = @"
                     CREATE TABLE IF NOT EXISTS items (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id VARCHAR(255) PRIMARY KEY,
                     transaction_id INT,
                     item_type VARCHAR(255),
                     quantity INT,
@@ -82,7 +81,7 @@ namespace Laundry.Model.Helper
 
                     string createIncomesTableQuery = @"
                     CREATE TABLE IF NOT EXISTS incomes (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id VARCHAR(255) PRIMARY KEY,
                     employee_id INT,
                     date DATE,
                     total INT,
