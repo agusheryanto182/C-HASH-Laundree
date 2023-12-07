@@ -227,10 +227,9 @@ namespace Laundry.Model.Repository
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select username, name, password 
+                string sql = @"select id, username, name, password 
                                from employees
-                               where username like @username
-                               order by username";
+                               where username like @username";
 
                 // membuat objek command menggunakan blok using
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
@@ -246,6 +245,7 @@ namespace Laundry.Model.Repository
                         {
                             // proses konversi dari row result set ke object
                             Employee emp = new Employee();
+                            emp.Id = dtr["id"].ToString();
                             emp.Username = dtr["username"].ToString();
                             emp.Name = dtr["name"].ToString();
                             emp.Password = dtr["password"].ToString();

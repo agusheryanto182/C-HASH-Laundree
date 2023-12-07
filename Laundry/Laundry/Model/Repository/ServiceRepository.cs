@@ -238,16 +238,15 @@ namespace Laundry.Model.Repository
         // Method untuk menampilkan data mahasiwa berdasarkan pencarian nama
         public Service ReadByName(string name)
         {
-            // membuat objek collection untuk menampung objek mahasiswa
-            Service list = new Service();
+            Service service = null;
 
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select id, name, price, duration 
-                               from services
-                               where name = @name
-                               order by name";
+                string sql = @"SELECT id, name, price, duration 
+                       FROM services
+                       WHERE name LIKE @name
+                       ORDER BY name";
 
                 // membuat objek command menggunakan blok using
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
@@ -261,25 +260,22 @@ namespace Laundry.Model.Repository
                         // panggil method Read untuk mendapatkan baris dari result set
                         while (dtr.Read())
                         {
-                            // proses konversi dari row result set ke object
-                            Service s = new Service();
-                            s.Id = dtr["id"].ToString();
-                            s.Name = dtr["name"].ToString();
+                            // proses konversi dari baris result set ke objek
+                            service = new Service();
+                            service.Id = dtr["id"].ToString();
+                            service.Name = dtr["name"].ToString();
 
-                            // Konversi nilai "price" ke tipe data int
-                            int price;
-                            if (int.TryParse(dtr["price"].ToString(), out price))
+                            // Konversi nilai "price" ke tipe data yang sesuai
+                            if (int.TryParse(dtr["price"].ToString(), out int price))
                             {
-                                s.Price = price;
+                                service.Price = price;
                             }
                             else
                             {
-                                s.Price = 0; // Nilai default jika konversi gagal
+                                service.Price = 0; // Nilai default jika konversi gagal
                             }
 
-                            s.Duration = dtr["Duration"].ToString();
-
-                            // tambahkan objek customer ke dalam collection
+                            service.Duration = dtr["duration"].ToString();
                         }
                     }
                 }
@@ -287,9 +283,11 @@ namespace Laundry.Model.Repository
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.Print("ReadByName error: {0}", ex.Message);
+                // Jangan lupa untuk menangani atau melaporkan kesalahan dengan benar
             }
 
-            return list;
+            return service;
         }
+
     }
 }

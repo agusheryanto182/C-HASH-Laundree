@@ -237,11 +237,45 @@ namespace Laundry.View
         private void btnAdd_Click(object sender, EventArgs e)
         {
             Transactions t = new Transactions();
-            t.CustomerId = "ID-CS-1-LAUNDREE";
-            t.ServiceId = "ID-SRV-1-LAUNDREE";
-            t.EmployeeId = "ID-EMP-1-LAUNDREE";
-            t.Weight = 100;
-            t.Status = "UNPAID";
+            var rCustomerId = cc.ReadDetailByName(cbCustomer.Text);
+            if (rCustomerId != null)
+            {
+                t.CustomerId = rCustomerId.Id;
+            }
+            else
+            {
+                MessageBox.Show("Pelanggan tidak ditemukan.", "Peringatan",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            var rServiceId = sc.ReadByName(cbService.Text);
+            if (rServiceId != null)
+            {
+                t.ServiceId = rServiceId.Id;
+            }
+            else
+            {
+                MessageBox.Show("Layanan tidak ditemukan.", "Peringatan",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            FrmLogin Login = new FrmLogin();
+            string usernameFromLogin = Login.EnteredUsername;
+            var r = ec.ReadByUsername(usernameFromLogin);
+            t.EmployeeId = r.Id;
+
+            if (int.TryParse(txtWeight.Text, out int weight))
+            {
+                t.Weight = weight;
+            }
+            else
+            {
+                MessageBox.Show("Masukkan berat dalam format numerik.", "Peringatan",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            t.Status = txtStatus.Text;
 
             t.Total = 100;
 

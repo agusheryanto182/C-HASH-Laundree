@@ -224,22 +224,20 @@ namespace Laundry.Model.Repository
 
         public Customer ReadDetailByName(string name)
         {
-            // membuat objek collection untuk menampung objek mahasiswa
-            Customer c = new Customer();
+            Customer c = null;
 
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select id, name, address, phone_number 
-                               from customers
-                               where name = @name
-                               order by name";
+                string sql = @"SELECT id, name, address, phone_number 
+                       FROM customers
+                       WHERE name LIKE @name";
 
                 // membuat objek command menggunakan blok using
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
                 {
                     // mendaftarkan parameter dan mengeset nilainya
-                    cmd.Parameters.AddWithValue("@name", string.Format("%{0}%", name));
+                    cmd.Parameters.AddWithValue("@name", '%' + name + '%');
 
                     // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
                     using (SQLiteDataReader dtr = cmd.ExecuteReader())
@@ -248,13 +246,14 @@ namespace Laundry.Model.Repository
                         while (dtr.Read())
                         {
                             // proses konversi dari row result set ke object
-                            Customer cs = new Customer();
-                            cs.Id = dtr["id"].ToString();
-                            cs.Name = dtr["name"].ToString();
-                            cs.Address = dtr["address"].ToString();
-                            cs.PhoneNumber = dtr["phone_number"].ToString();
+                            c = new Customer();
+                            c.Id = dtr["id"].ToString();
+                            c.Name = dtr["name"].ToString();
+                            c.Address = dtr["address"].ToString();
+                            c.PhoneNumber = dtr["phone_number"].ToString();
 
-                            // tambahkan objek mahasiswa ke dalam collection
+                            // Jika Anda ingin mengembalikan hasil pencarian pertama, Anda bisa langsung kembali di sini
+                            return c;
                         }
                     }
                 }
