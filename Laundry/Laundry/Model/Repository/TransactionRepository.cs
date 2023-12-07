@@ -50,7 +50,7 @@ namespace Laundry.Model.Repository
 
             // deklarasi perintah SQL
             string sql = @"insert into transactions (id, employee_id, customer_id, service_id, weight, status, total)
-                   values (id, @employee_id, @customer_id, @service_id, @weight, @status, @total)";
+                   values (@id, @employee_id, @customer_id, @service_id, @weight, @status, @total)";
 
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
@@ -163,11 +163,11 @@ namespace Laundry.Model.Repository
                             Transactions t = new Transactions();
                             t.Id = dtr["id"].ToString();
                             t.EmployeeId = dtr["employee_id"].ToString();
-                            t.CustomerId = dtr["address"].ToString();
-                            t.ServiceId = dtr["phone_number"].ToString();
+                            t.CustomerId = dtr["customer_id"].ToString();
+                            t.ServiceId = dtr["service_id"].ToString();
 
                             int weight;
-                            if (int.TryParse(dtr["employee_id"].ToString(), out weight))
+                            if (int.TryParse(dtr["weight"].ToString(), out weight))
                             {
                                 t.Weight = weight;
                             }
@@ -176,10 +176,10 @@ namespace Laundry.Model.Repository
                                 t.Weight = 0;
                             }
 
-                            t.Status = dtr["phone_number"].ToString();
+                            t.Status = dtr["status"].ToString();
 
                             float total;
-                            if (float.TryParse(dtr["employee_id"].ToString(), out total))
+                            if (float.TryParse(dtr["total"].ToString(), out total))
                             {
                                 t.Weight = weight;
                             }

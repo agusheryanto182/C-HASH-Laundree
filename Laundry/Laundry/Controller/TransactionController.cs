@@ -14,6 +14,9 @@ namespace Laundry.Controller
     {
         // deklarasi objek Repository untuk menjalankan operasi CRUD
         private TransactionRepository _repository;
+        private CustomerController _customerController;
+        private ServiceController _serviceController;
+
 
         public List<Transactions> ReadByName(string name)
         {
@@ -62,7 +65,14 @@ namespace Laundry.Controller
                 return 0;
             }
 
-            // cek nama yang diinputkan tidak boleh kosong
+
+            if (string.IsNullOrEmpty(t.ServiceId))
+            {
+                MessageBox.Show("Layanan harus diisi !!!", "Peringatan",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return 0;
+            }
+
             if (t.Weight == 0)
             {
                 MessageBox.Show("Berat harus diisi !!!", "Peringatan",
@@ -70,11 +80,17 @@ namespace Laundry.Controller
                 return 0;
             }
 
-            // cek angkatan yang diinputkan tidak boleh kosong
             if (string.IsNullOrEmpty(t.Status))
             {
                 MessageBox.Show("Status harus diisi !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return 0;
+            }
+
+            if (t.Total <= 0)
+            {
+                MessageBox.Show("Total tidak boleh kurang dari nol !!!", "Peringatan",
+                       MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return 0;
             }
 

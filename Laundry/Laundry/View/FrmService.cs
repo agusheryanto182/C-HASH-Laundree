@@ -19,6 +19,7 @@ namespace Laundry.View
         private ServiceController controller;
         // deklarasi field untuk meyimpan objek mahasiswa
         private List<Service> listOfService = new List<Service>();
+        private Service detailS = new Service();
         public FrmService()
         {
             InitializeComponent();
@@ -38,7 +39,7 @@ namespace Laundry.View
             Service s = new Service();
             // set nilai property objek mahasiswa yg diambil dari TextBox
             s.Name = txtName.Text;
-            if (float.TryParse(txtPrice.Text, out float price))
+            if (int.TryParse(txtPrice.Text, out int price))
             {
                 s.Price = price;
             }
@@ -63,7 +64,7 @@ namespace Laundry.View
                 Service s = new Service();
                 s.Id = lblNoService.Text;
                 s.Name = txtName.Text;
-                if (float.TryParse(txtPrice.Text, out float price))
+                if (int.TryParse(txtPrice.Text, out int price))
                 {
                     s.Price = price;
                 }
@@ -176,7 +177,7 @@ namespace Laundry.View
         {
             lvwService.Items.Clear();
             // panggil method ReadAll dan tampung datanya ke dalam collection
-            listOfService = controller.ReadByName(name);
+            detailS = controller.ReadByName(name);
             // ekstrak objek mhs dari collection
             foreach (var s in listOfService)
             {
@@ -204,7 +205,7 @@ namespace Laundry.View
                 s.Name = selectedItem.SubItems[2].Text;
 
                 // Konversi nilai dari string ke float untuk properti Price
-                if (float.TryParse(selectedItem.SubItems[3].Text, out float price))
+                if (int.TryParse(selectedItem.SubItems[3].Text, out int price))
                 {
                     s.Price = price;
                 }

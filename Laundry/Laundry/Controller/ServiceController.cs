@@ -34,10 +34,10 @@ namespace Laundry.Controller
         }
 
 
-        public List<Service> ReadByName(string name)
+        public Service ReadByName(string name)
         {
             // membuat objek collection
-            List<Service> list = new List<Service>();
+            Service s = new Service();
 
             // membuat objek context menggunakan blok using
             using (DbContext context = new DbContext())
@@ -46,10 +46,10 @@ namespace Laundry.Controller
                 _repository = new ServiceRepository(context);
 
                 // panggil method ReadByNama yang ada di dalam class repository
-                list = _repository.ReadByName(name);
+                s = _repository.ReadByName(name);
             }
 
-            return list;
+            return s;
         }
 
         public List<Service> ReadAll()

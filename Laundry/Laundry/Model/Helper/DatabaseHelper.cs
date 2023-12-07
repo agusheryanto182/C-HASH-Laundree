@@ -55,12 +55,12 @@ namespace Laundry.Model.Helper
                     string createTransactionsTableQuery = @"
                     CREATE TABLE IF NOT EXISTS transactions (
                     id VARCHAR(255) PRIMARY KEY,
-                    employee_id INT,
-                    customer_id INT,
-                    service_id INT,
+                    employee_id VARCHAR(255),
+                    customer_id VARCHAR(255),
+                    service_id VARCHAR(255),
                     weight INT,
                     status VARCHAR(255),
-                    total INT,
+                    total FLOAT,
                     created_at TIMESTAMP,
                     updated_at TIMESTAMP,
                     FOREIGN KEY (employee_id) REFERENCES employees(id),

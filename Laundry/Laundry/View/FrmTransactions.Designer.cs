@@ -51,7 +51,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.txtCustomer = new System.Windows.Forms.TextBox();
+            this.cbCustomer = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -68,6 +68,7 @@
             this.btnDelete.TabIndex = 46;
             this.btnDelete.Text = "Hapus";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // groupBox1
             // 
@@ -139,6 +140,7 @@
             this.btnEdit.TabIndex = 45;
             this.btnEdit.Text = "Ubah";
             this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // txtSearch
             // 
@@ -159,6 +161,7 @@
             this.btnAdd.TabIndex = 41;
             this.btnAdd.Text = "Tambah";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnSearch
             // 
@@ -173,6 +176,7 @@
             this.btnSearch.TabIndex = 40;
             this.btnSearch.Text = "Cari";
             this.btnSearch.UseVisualStyleBackColor = false;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // groupBox3
             // 
@@ -291,20 +295,21 @@
             this.label11.TabIndex = 95;
             this.label11.Text = "Pelanggan";
             // 
-            // txtCustomer
+            // cbCustomer
             // 
-            this.txtCustomer.Location = new System.Drawing.Point(256, 288);
-            this.txtCustomer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtCustomer.Name = "txtCustomer";
-            this.txtCustomer.Size = new System.Drawing.Size(159, 22);
-            this.txtCustomer.TabIndex = 96;
+            this.cbCustomer.FormattingEnabled = true;
+            this.cbCustomer.Location = new System.Drawing.Point(226, 289);
+            this.cbCustomer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cbCustomer.Name = "cbCustomer";
+            this.cbCustomer.Size = new System.Drawing.Size(159, 24);
+            this.cbCustomer.TabIndex = 96;
             // 
             // FrmTransactions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1040, 748);
-            this.Controls.Add(this.txtCustomer);
+            this.Controls.Add(this.cbCustomer);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.cbService);
@@ -361,6 +366,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txtCustomer;
+        private System.Windows.Forms.ComboBox cbCustomer;
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using Laundry.Model.Entity;
 using Laundry.Model.Context;
-
+using System.Windows.Forms;
 
 namespace Laundry.Model.Repository
 {
@@ -53,8 +53,9 @@ namespace Laundry.Model.Repository
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
+                string newId = GenerateId();
                 // mendaftarkan parameter dan mengeset nilainya
-                cmd.Parameters.AddWithValue("@id", emp.Id);
+                cmd.Parameters.AddWithValue("@id", newId);
                 cmd.Parameters.AddWithValue("@username", emp.Username);
                 cmd.Parameters.AddWithValue("@name", emp.Name);
                 cmd.Parameters.AddWithValue("@password", emp.Password);

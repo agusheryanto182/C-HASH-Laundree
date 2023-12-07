@@ -222,6 +222,52 @@ namespace Laundry.Model.Repository
             return list;
         }
 
+        public Customer ReadDetailByName(string name)
+        {
+            // membuat objek collection untuk menampung objek mahasiswa
+            Customer c = new Customer();
+
+            try
+            {
+                // deklarasi perintah SQL
+                string sql = @"select id, name, address, phone_number 
+                               from customers
+                               where name = @name
+                               order by name";
+
+                // membuat objek command menggunakan blok using
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
+                {
+                    // mendaftarkan parameter dan mengeset nilainya
+                    cmd.Parameters.AddWithValue("@name", string.Format("%{0}%", name));
+
+                    // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
+                    using (SQLiteDataReader dtr = cmd.ExecuteReader())
+                    {
+                        // panggil method Read untuk mendapatkan baris dari result set
+                        while (dtr.Read())
+                        {
+                            // proses konversi dari row result set ke object
+                            Customer cs = new Customer();
+                            cs.Id = dtr["id"].ToString();
+                            cs.Name = dtr["name"].ToString();
+                            cs.Address = dtr["address"].ToString();
+                            cs.PhoneNumber = dtr["phone_number"].ToString();
+
+                            // tambahkan objek mahasiswa ke dalam collection
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print("ReadByName error: {0}", ex.Message);
+            }
+
+            return c;
+        }
+
+
         public Customer ReadById(string id)
         {
             Customer cs = new Customer();

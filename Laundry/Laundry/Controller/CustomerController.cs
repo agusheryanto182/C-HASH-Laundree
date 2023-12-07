@@ -51,6 +51,24 @@ namespace Laundry.Controller
             return list;
         }
 
+        public Customer ReadDetailByName(string name)
+        {
+            // membuat objek collection
+            Customer c = new Customer();
+
+            // membuat objek context menggunakan blok using
+            using (DbContext context = new DbContext())
+            {
+                // membuat objek dari class repository
+                _repository = new CustomerRepository(context);
+
+                // panggil method ReadByNama yang ada di dalam class repository
+                c = _repository.ReadDetailByName(name);
+            }
+
+            return c;
+        }
+
         public List<Customer> ReadAll()
         {
             // membuat objek collection

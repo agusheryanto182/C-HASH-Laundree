@@ -48,8 +48,8 @@ namespace Laundry.Model.Repository
                             s.Name = dtr["name"].ToString();
 
                             // Konversi nilai "price" ke tipe data int
-                            float price;
-                            if (float.TryParse(dtr["price"].ToString(), out price))
+                            int price;
+                            if (int.TryParse(dtr["price"].ToString(), out price))
                             {
                                 s.Price = price;
                             }
@@ -209,8 +209,8 @@ namespace Laundry.Model.Repository
                             s.Name = dtr["name"].ToString();
 
                             // Konversi nilai "price" ke tipe data int
-                            float price;
-                            if (float.TryParse(dtr["price"].ToString(), out price))
+                            int price;
+                            if (int.TryParse(dtr["price"].ToString(), out price))
                             {
                                 s.Price = price;
                             }
@@ -236,17 +236,17 @@ namespace Laundry.Model.Repository
         }
 
         // Method untuk menampilkan data mahasiwa berdasarkan pencarian nama
-        public List<Service> ReadByName(string name)
+        public Service ReadByName(string name)
         {
             // membuat objek collection untuk menampung objek mahasiswa
-            List<Service> list = new List<Service>();
+            Service list = new Service();
 
             try
             {
                 // deklarasi perintah SQL
                 string sql = @"select id, name, price, duration 
                                from services
-                               where name like @name
+                               where name = @name
                                order by name";
 
                 // membuat objek command menggunakan blok using
@@ -267,8 +267,8 @@ namespace Laundry.Model.Repository
                             s.Name = dtr["name"].ToString();
 
                             // Konversi nilai "price" ke tipe data int
-                            float price;
-                            if (float.TryParse(dtr["price"].ToString(), out price))
+                            int price;
+                            if (int.TryParse(dtr["price"].ToString(), out price))
                             {
                                 s.Price = price;
                             }
@@ -280,7 +280,6 @@ namespace Laundry.Model.Repository
                             s.Duration = dtr["Duration"].ToString();
 
                             // tambahkan objek customer ke dalam collection
-                            list.Add(s);
                         }
                     }
                 }
