@@ -181,7 +181,7 @@ namespace Laundry.Model.Repository
 
             try
             {
-                string sql = @"SELECT id, employee_id, customer_id, service_id, weight, status, total
+                string sql = @"SELECT id, employee_id, customer_id, service_id, weight, status, total, created_at, updated_at
                         FROM transactions";
 
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))

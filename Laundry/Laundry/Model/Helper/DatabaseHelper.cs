@@ -38,8 +38,8 @@ namespace Laundry.Model.Helper
                     name VARCHAR(255),
                     address VARCHAR(255),
                     phone_number VARCHAR(255),
-                    created_at TIMESTAMP,
-                    updated_at TIMESTAMP
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                     );";
 
                     string createServicesTableQuery = @"
@@ -48,8 +48,8 @@ namespace Laundry.Model.Helper
                     name VARCHAR(255),
                     price FLOAT,
                     duration VARCHAR(255),
-                    created_at TIMESTAMP,
-                    updated_at TIMESTAMP
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                     );";
 
                     string createTransactionsTableQuery = @"
@@ -61,32 +61,14 @@ namespace Laundry.Model.Helper
                     weight INT,
                     status VARCHAR(255),
                     total DECIMAL(10, 2),
-                    created_at TIMESTAMP,
-                    updated_at TIMESTAMP,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (employee_id) REFERENCES employees(id),
                     FOREIGN KEY (customer_id) REFERENCES customers(id),
                     FOREIGN KEY (service_id) REFERENCES services(id)
                     );";
 
-                    string createItemsTableQuery = @"
-                    CREATE TABLE IF NOT EXISTS items (
-                    id VARCHAR(255) PRIMARY KEY,
-                    transaction_id INT,
-                    item_type VARCHAR(255),
-                    quantity INT,
-                    FOREIGN KEY (transaction_id) REFERENCES transactions(id)
-                    );";
-
-                    string createIncomesTableQuery = @"
-                    CREATE TABLE IF NOT EXISTS incomes (
-                    id VARCHAR(255) PRIMARY KEY,
-                    employee_id INT,
-                    date DATE,
-                    total INT,
-                    created_at TIMESTAMP,
-                    updated_at TIMESTAMP,
-                    FOREIGN KEY (employee_id) REFERENCES employees(id)
-                    );";
+         
 
                     using (var command = new SQLiteCommand(connection))
                     {
@@ -97,10 +79,6 @@ namespace Laundry.Model.Helper
                         command.CommandText = createServicesTableQuery;
                         command.ExecuteNonQuery();
                         command.CommandText = createTransactionsTableQuery;
-                        command.ExecuteNonQuery();
-                        command.CommandText = createItemsTableQuery;
-                        command.ExecuteNonQuery();
-                        command.CommandText = createIncomesTableQuery;
                         command.ExecuteNonQuery();
                         connection.Close();
 

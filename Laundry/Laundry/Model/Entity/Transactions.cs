@@ -15,6 +15,8 @@ namespace Laundry.Model.Entity
         public int Weight { get; set; }
         public string Status { get; set; }
         public decimal Total { get; set; } 
+        public DateTime Order {  get; set; }
+        public DateTime Finish { get; set; }
     }
 
 }
