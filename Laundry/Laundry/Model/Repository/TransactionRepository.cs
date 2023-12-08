@@ -116,6 +116,37 @@ namespace Laundry.Model.Repository
             return result;
         }
 
+        public int UpdateStatus(Transactions t)
+        {
+            int result = 0;
+
+            // deklarasi perintah SQL
+            string sql = @"update transactions SET status = @status
+                           where id = @id";
+
+            // membuat objek command menggunakan blok using
+            using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
+            {
+
+                // mendaftarkan parameter dan mengeset nilainya
+                cmd.Parameters.AddWithValue("@id", t.Id);
+                cmd.Parameters.AddWithValue("@status", t.Status);
+
+
+                try
+                {
+                    // jalankan perintah UPDATE dan tampung hasilnya ke dalam variabel result
+                    result = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.Print("Update error: {0}", ex.Message);
+                }
+            }
+
+            return result;
+        }
+
         public int Delete(string id)
         {
             int result = 0;

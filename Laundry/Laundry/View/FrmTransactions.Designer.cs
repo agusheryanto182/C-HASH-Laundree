@@ -40,19 +40,20 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lblTotal = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtPay = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.cbService = new System.Windows.Forms.ComboBox();
-            this.txtStatus = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtWeight = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.cbCustomer = new System.Windows.Forms.ComboBox();
-            this.lblTotal = new System.Windows.Forms.Label();
+            this.btnPay = new System.Windows.Forms.Button();
+            this.txtStatus = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -194,6 +195,15 @@
             this.groupBox3.TabIndex = 92;
             this.groupBox3.TabStop = false;
             // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotal.Location = new System.Drawing.Point(73, 27);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(0, 22);
+            this.lblTotal.TabIndex = 86;
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -240,14 +250,6 @@
             this.cbService.Name = "cbService";
             this.cbService.Size = new System.Drawing.Size(159, 24);
             this.cbService.TabIndex = 91;
-            // 
-            // txtStatus
-            // 
-            this.txtStatus.Location = new System.Drawing.Point(545, 325);
-            this.txtStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtStatus.Name = "txtStatus";
-            this.txtStatus.Size = new System.Drawing.Size(159, 22);
-            this.txtStatus.TabIndex = 90;
             // 
             // label7
             // 
@@ -306,20 +308,33 @@
             this.cbCustomer.Size = new System.Drawing.Size(159, 24);
             this.cbCustomer.TabIndex = 96;
             // 
-            // lblTotal
+            // btnPay
             // 
-            this.lblTotal.AutoSize = true;
-            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTotal.Location = new System.Drawing.Point(73, 27);
-            this.lblTotal.Name = "lblTotal";
-            this.lblTotal.Size = new System.Drawing.Size(0, 22);
-            this.lblTotal.TabIndex = 86;
+            this.btnPay.Image = ((System.Drawing.Image)(resources.GetObject("btnPay.Image")));
+            this.btnPay.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPay.Location = new System.Drawing.Point(973, 251);
+            this.btnPay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnPay.Name = "btnPay";
+            this.btnPay.Size = new System.Drawing.Size(45, 57);
+            this.btnPay.TabIndex = 97;
+            this.btnPay.UseVisualStyleBackColor = true;
+            this.btnPay.Click += new System.EventHandler(this.btnPay_Click_1);
+            // 
+            // txtStatus
+            // 
+            this.txtStatus.Location = new System.Drawing.Point(545, 325);
+            this.txtStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtStatus.Name = "txtStatus";
+            this.txtStatus.Size = new System.Drawing.Size(159, 22);
+            this.txtStatus.TabIndex = 90;
+            this.txtStatus.TextChanged += new System.EventHandler(this.txtStatus_TextChanged);
             // 
             // FrmTransactions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1040, 748);
+            this.Controls.Add(this.btnPay);
             this.Controls.Add(this.cbCustomer);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.groupBox3);
@@ -371,7 +386,6 @@
         private System.Windows.Forms.TextBox txtPay;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox cbService;
-        private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtWeight;
         private System.Windows.Forms.Label label1;
@@ -379,5 +393,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cbCustomer;
         private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Button btnPay;
+        private System.Windows.Forms.TextBox txtStatus;
     }
 }

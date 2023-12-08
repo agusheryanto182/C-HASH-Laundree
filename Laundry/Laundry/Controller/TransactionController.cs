@@ -82,9 +82,7 @@ namespace Laundry.Controller
 
             if (string.IsNullOrEmpty(t.Status))
             {
-                MessageBox.Show("Status harus diisi !!!", "Peringatan",
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return 0;
+                t.Status = "SEDANG DIPROSES";
             }
 
             if (t.Total == 0)
@@ -160,6 +158,32 @@ namespace Laundry.Controller
             }
             else
                 MessageBox.Show("Data transaksi gagal diupdate !!!", "Peringatan",
+                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            return result;
+        }
+
+        public int UpdateStatus(Transactions t)
+        {
+            int result = 0;
+
+            // membuat objek context menggunakan blok using
+            using (DbContext context = new DbContext())
+            {
+                // membuat objek dari class repository
+                _repository = new TransactionRepository(context);
+
+                // panggil method Update class repository untuk mengupdate data
+                result = _repository.UpdateStatus(t);
+            }
+
+            if (result > 0 && t.Status == "LUNAS")
+            {
+                MessageBox.Show("Pembayaran berhasil !", "Informasi",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+                MessageBox.Show("Pembayaran gagal !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             return result;

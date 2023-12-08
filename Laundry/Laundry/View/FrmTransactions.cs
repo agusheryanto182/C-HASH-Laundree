@@ -358,20 +358,6 @@ namespace Laundry.View
                 var r = ec.ReadByUsername(usernameFromLogin);
                 t.EmployeeId = r.Id;
 
-                Console.WriteLine($"informasi customer dari txt: {t.Id}");
-
-                Console.WriteLine($"informasi customer dari txt: {cbCustomer.Text}");
-
-                Console.WriteLine($"informasi service dari txt: {cbService.Text}");
-
-                Console.WriteLine($"informasi status dari txt: {txtStatus.Text}");
-
-                Console.WriteLine($"informasi berat dari txt: {txtWeight.Text}");
-
-                Console.WriteLine($"informasi berat dari txt: {lblTotal.Text}");
-
-
-
                 if (int.TryParse(txtWeight.Text, out int weight))
                 {
                     t.Weight = weight;
@@ -451,6 +437,77 @@ namespace Laundry.View
                 // Inform the user that the name is required
                 MessageBox.Show("Please enter a name.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+       
+
+        private void btnPay_Click_1(object sender, EventArgs e)
+        {
+            if (lvwTransactions.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = lvwTransactions.SelectedItems[0];
+                LoadDataByClick();
+                Transactions t = new Transactions();
+                var id = selectedItem.SubItems[1].Text;
+                t.Id = id;
+
+                decimal dTotal = 0;
+                if (decimal.TryParse(lblTotal.Text, out decimal total))
+                {
+                    dTotal = total;
+                }
+                else
+                {
+                    MessageBox.Show("Masukkan berat dalam format numerik.", "Peringatan",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+
+                decimal dPay = 0;
+                if (decimal.TryParse(txtPay.Text, out decimal pay))
+                {
+                    dPay = pay;
+                }
+                else
+                {
+                    MessageBox.Show("Masukkan berat dalam format numerik.", "Peringatan",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+
+                if (txtStatus.Text == "LUNAS")
+                {
+                    MessageBox.Show($"Sudah dibayar !!!", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                
+                if (dPay >= dTotal)
+                {
+                    decimal change = dPay - dTotal;
+                    MessageBox.Show($"Pembayaran berhasil! Kembalian: {change:C}", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    t.Status = "LUNAS";
+
+                }
+                else
+                {
+                    MessageBox.Show("Pembayaran tidak mencukupi.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    t.Status = "BELUM LUNAS";
+
+                }
+
+                tc.UpdateStatus(t);
+
+                LoadData();
+            }
+            else 
+            {
+                MessageBox.Show("Data belum dipilih", "Peringatan",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void txtStatus_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
