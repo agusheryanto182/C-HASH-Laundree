@@ -14,7 +14,7 @@ namespace Laundry.Model.Entity
         public string ServiceId { get; set; }
         public int Weight { get; set; }
         public string Status { get; set; }
-        public float Total { get; set; }
-
+        public decimal Total { get; set; } 
     }
+
 }

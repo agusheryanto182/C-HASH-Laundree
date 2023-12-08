@@ -274,38 +274,38 @@ namespace Laundry.Model.Repository
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select id, name, address, phone_number 
-                               from customers
-                               where id = @id";
+                string sql = @"SELECT id, name, address, phone_number 
+                       FROM customers
+                       WHERE id = @id
+                       LIMIT 1"; // Hanya ambil satu baris
 
                 // membuat objek command menggunakan blok using
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
                 {
                     // mendaftarkan parameter dan mengeset nilainya
-                    cmd.Parameters.AddWithValue("@id", string.Format("%{0}%", id));
+                    cmd.Parameters.AddWithValue("@id", id);
 
                     // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
                     using (SQLiteDataReader dtr = cmd.ExecuteReader())
                     {
                         // panggil method Read untuk mendapatkan baris dari result set
-                        while (dtr.Read())
+                        if (dtr.Read())
                         {
                             cs.Id = dtr["id"].ToString();
                             cs.Name = dtr["name"].ToString();
                             cs.Address = dtr["address"].ToString();
                             cs.PhoneNumber = dtr["phone_number"].ToString();
-
-                            // tambahkan objek mahasiswa ke dalam collection
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.Print("ReadByName error: {0}", ex.Message);
+                System.Diagnostics.Debug.Print("ReadById error: {0}", ex.Message);
             }
 
             return cs;
         }
+
     }
 }

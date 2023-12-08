@@ -28,21 +28,22 @@ namespace Laundry.Model.Repository
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select id, name, price, duration 
-                               from services
-                               where id = @id";
+                string sql = @"SELECT id, name, price, duration 
+                       FROM services
+                       WHERE id = @id
+                       LIMIT 1"; // Hanya ambil satu baris
 
                 // membuat objek command menggunakan blok using
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
                 {
                     // mendaftarkan parameter dan mengeset nilainya
-                    cmd.Parameters.AddWithValue("@id", string.Format("%{0}%", id));
+                    cmd.Parameters.AddWithValue("@id", id);
 
                     // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
                     using (SQLiteDataReader dtr = cmd.ExecuteReader())
                     {
                         // panggil method Read untuk mendapatkan baris dari result set
-                        while (dtr.Read())
+                        if (dtr.Read())
                         {
                             s.Id = dtr["id"].ToString();
                             s.Name = dtr["name"].ToString();
@@ -58,18 +59,19 @@ namespace Laundry.Model.Repository
                                 s.Price = 0; // Nilai default jika konversi gagal
                             }
 
-                            s.Duration = dtr["Duration"].ToString();
+                            s.Duration = dtr["duration"].ToString(); // Perhatikan penggunaan huruf kecil pada "duration"
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.Print("ReadByName error: {0}", ex.Message);
+                System.Diagnostics.Debug.Print("ReadById error: {0}", ex.Message);
             }
 
             return s;
         }
+
 
         private int GetServiceCount()
         {

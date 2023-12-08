@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Authentication.ExtendedProtection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -54,6 +55,7 @@ namespace Laundry.View
             lvwTransactions.Columns.Add("Layanan", 200, HorizontalAlignment.Left);
             lvwTransactions.Columns.Add("Berat", 200, HorizontalAlignment.Center);
             lvwTransactions.Columns.Add("Status", 200, HorizontalAlignment.Center);
+            lvwTransactions.Columns.Add("Total", 200, HorizontalAlignment.Center);
         }
 
         private void FillComboBoxCustomer()
@@ -114,10 +116,17 @@ namespace Laundry.View
                 var noUrut = lvwTransactions.Items.Count + 1;
                 var item = new ListViewItem(noUrut.ToString());
                 item.SubItems.Add(t.Id);
-                item.SubItems.Add(t.CustomerId);
-                item.SubItems.Add(t.ServiceId);
+
+                var customerName = cc.ReadById(t.CustomerId);
+                item.SubItems.Add(customerName.Name);
+
+                var serviceName = sc.ReadById(t.ServiceId);
+                item.SubItems.Add(serviceName.Name);
+
                 item.SubItems.Add(t.Weight.ToString());
                 item.SubItems.Add(t.Status);
+                Console.WriteLine($"Jumlah total di loaddata: {t.Total}");
+                item.SubItems.Add(t.Total.ToString());
 
                 // tampilkan data mhs ke listview
                 lvwTransactions.Items.Add(item);
@@ -137,17 +146,22 @@ namespace Laundry.View
                 var noUrut = lvwTransactions.Items.Count + 1;
                 var item = new ListViewItem(noUrut.ToString());
                 item.SubItems.Add(t.Id);
-                var name = cc.ReadById(t.Id);
-                item.SubItems.Add(name.Name);
 
-                var layanan = sc.ReadById(t.ServiceId);
-                item.SubItems.Add(layanan.Name);
+                var customerName = cc.ReadById(t.CustomerId);
+                item.SubItems.Add(customerName.Name);
+
+                var serviceName = sc.ReadById(t.ServiceId);
+                item.SubItems.Add(serviceName.Name);
+
                 item.SubItems.Add(t.Weight.ToString());
                 item.SubItems.Add(t.Status);
+                Console.WriteLine($"Jumlah total di loaddata: {t.Total}");
+                item.SubItems.Add(t.Total.ToString());
+
                 // tampilkan data mhs ke listview
                 lvwTransactions.Items.Add(item);
             }
-            lvwTransactions.Click += new EventHandler(lvwTransaction_click);
+                lvwTransactions.Click += new EventHandler(lvwTransaction_click);
         }
 
         private void lvwTransaction_click(object sender, EventArgs e)
@@ -160,12 +174,11 @@ namespace Laundry.View
                 Transactions t = new Transactions();
 
                 // Mendapatkan data dari item yang dipilih
-                t.Id = selectedItem.SubItems[1].Text;
+  
                 t.CustomerId = selectedItem.SubItems[2].Text;
                 t.ServiceId = selectedItem.SubItems[3].Text;
 
-                // Konversi nilai dari string ke float untuk properti Price
-                if (int.TryParse(selectedItem.SubItems[3].Text, out int weight))
+                if (int.TryParse(selectedItem.SubItems[4].Text, out int weight))
                 {
                     t.Weight = weight;
                 }
@@ -175,14 +188,25 @@ namespace Laundry.View
                     return;
                 }
 
-                t.Status = selectedItem.SubItems[4].Text;
+                t.Status = selectedItem.SubItems[5].Text;
+
+                if (decimal.TryParse(selectedItem.SubItems[6].Text, out decimal total))
+                {
+                    t.Total = total;
+                }
+                else
+                {
+                    MessageBox.Show("Invalid price value in the selected item.");
+                    return;
+                }
 
                 // Menampilkan data ke TextBox
-                
+
                 cbCustomer.Text = t.CustomerId;
                 cbService.Text = t.ServiceId;
                 txtWeight.Text = t.Weight.ToString(); // Konversi float ke string
                 txtStatus.Text = t.Status;
+                lblTotal.Text = t.Total.ToString();
             }
         }
 
@@ -220,6 +244,7 @@ namespace Laundry.View
             txtPay.Text = "";
             txtWeight.Text = "";
             txtStatus.Text = "";
+            lblTotal.Text = "";
         }
 
         private void FrmTransactions_Load(object sender, EventArgs e)
@@ -277,7 +302,16 @@ namespace Laundry.View
             }
             t.Status = txtStatus.Text;
 
-            t.Total = 100;
+            decimal dWeight = weight;
+
+            decimal servicePrice = rServiceId.Price; 
+
+            decimal total = dWeight * servicePrice;
+
+            lblTotal.Text = total.ToString();
+
+            t.Total = dWeight * servicePrice;
+            Console.WriteLine($"Nilai Total di frm: {t.Total}");
 
             tc.Create(t);
 
@@ -288,7 +322,7 @@ namespace Laundry.View
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-
+         
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

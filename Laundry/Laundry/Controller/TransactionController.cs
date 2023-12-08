@@ -87,9 +87,9 @@ namespace Laundry.Controller
                 return 0;
             }
 
-            if (t.Total <= 0)
+            if (t.Total == 0)
             {
-                MessageBox.Show("Total tidak boleh kurang dari nol !!!", "Peringatan",
+                MessageBox.Show("Total tidak boleh nol !!!", "Peringatan",
                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return 0;
             }

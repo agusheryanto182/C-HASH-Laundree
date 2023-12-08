@@ -64,10 +64,14 @@ namespace Laundry.Model.Repository
                 cmd.Parameters.AddWithValue("@weight", t.Weight);
                 cmd.Parameters.AddWithValue("@status", t.Status);
                 cmd.Parameters.AddWithValue("@total", t.Total);
+                Console.WriteLine($"Nilai Parameter @total: {cmd.Parameters["@total"].Value}");
+
 
                 try
                 {
                     result = cmd.ExecuteNonQuery();
+                    Console.WriteLine($"Jumlah Baris yang Terpengaruh: {result}");
+
                 }
                 catch (Exception ex)
                 {
@@ -89,6 +93,7 @@ namespace Laundry.Model.Repository
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
+
                 // mendaftarkan parameter dan mengeset nilainya
                 cmd.Parameters.AddWithValue("@id", t.Id);
                 cmd.Parameters.AddWithValue("@service_id", t.ServiceId);
@@ -141,66 +146,44 @@ namespace Laundry.Model.Repository
 
         public List<Transactions> ReadAll()
         {
-            // membuat objek collection untuk menampung objek mahasiswa
             List<Transactions> list = new List<Transactions>();
 
             try
             {
-                // deklarasi perintah SQL
-                string sql = @"select id, employee_id, customer_id, service_id, weight, status, total
-                               from transactions";
+                string sql = @"SELECT id, employee_id, customer_id, service_id, weight, status, total
+                        FROM transactions";
 
-                // membuat objek command menggunakan blok using
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
                 {
-                    // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
                     using (SQLiteDataReader dtr = cmd.ExecuteReader())
                     {
-                        // panggil method Read untuk mendapatkan baris dari result set
                         while (dtr.Read())
                         {
-                            // proses konversi dari row result set ke object
-                            Transactions t = new Transactions();
-                            t.Id = dtr["id"].ToString();
-                            t.EmployeeId = dtr["employee_id"].ToString();
-                            t.CustomerId = dtr["customer_id"].ToString();
-                            t.ServiceId = dtr["service_id"].ToString();
-
-                            int weight;
-                            if (int.TryParse(dtr["weight"].ToString(), out weight))
+                            Transactions t = new Transactions
                             {
-                                t.Weight = weight;
-                            }
-                            else
-                            {
-                                t.Weight = 0;
-                            }
+                                Id = dtr["id"].ToString(),
+                                EmployeeId = dtr["employee_id"].ToString(),
+                                CustomerId = dtr["customer_id"].ToString(),
+                                ServiceId = dtr["service_id"].ToString(),
+                                Weight = int.TryParse(dtr["weight"].ToString(), out int weight) ? weight : 0,
+                                Status = dtr["status"].ToString(),
+                                Total = decimal.TryParse(dtr["total"].ToString(), out decimal total) ? total : 0
+                            };
 
-                            t.Status = dtr["status"].ToString();
-
-                            float total;
-                            if (float.TryParse(dtr["total"].ToString(), out total))
-                            {
-                                t.Weight = weight;
-                            }
-                            else
-                            {
-                                t.Total = 0;
-                            }
-
-                            // tambahkan objek customer ke dalam collection
                             list.Add(t);
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (SQLiteException ex)
             {
-                System.Diagnostics.Debug.Print("ReadAll error: {0}", ex.Message);
+                // Catat kesalahan menggunakan kerangka pencatatan atau Console.WriteLine
+                Console.WriteLine("ReadAll error: {0}", ex.Message);
             }
 
             return list;
         }
+
 
         // Method untuk menampilkan data mahasiwa berdasarkan pencarian nama
         public List<Transactions> ReadByName(string id)

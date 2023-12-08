@@ -52,6 +52,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.cbCustomer = new System.Windows.Forms.ComboBox();
+            this.lblTotal = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -180,6 +181,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.lblTotal);
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.txtPay);
@@ -304,6 +306,15 @@
             this.cbCustomer.Size = new System.Drawing.Size(159, 24);
             this.cbCustomer.TabIndex = 96;
             // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotal.Location = new System.Drawing.Point(73, 27);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(0, 22);
+            this.lblTotal.TabIndex = 86;
+            // 
             // FrmTransactions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -367,5 +378,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cbCustomer;
+        private System.Windows.Forms.Label lblTotal;
     }
 }

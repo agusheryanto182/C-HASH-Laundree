@@ -60,7 +60,7 @@ namespace Laundry.Model.Helper
                     service_id VARCHAR(255),
                     weight INT,
                     status VARCHAR(255),
-                    total FLOAT,
+                    total DECIMAL(10, 2),
                     created_at TIMESTAMP,
                     updated_at TIMESTAMP,
                     FOREIGN KEY (employee_id) REFERENCES employees(id),
