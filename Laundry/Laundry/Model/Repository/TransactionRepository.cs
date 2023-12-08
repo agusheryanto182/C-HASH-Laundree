@@ -186,7 +186,7 @@ namespace Laundry.Model.Repository
 
 
         // Method untuk menampilkan data mahasiwa berdasarkan pencarian nama
-        public List<Transactions> ReadByName(string id)
+        public List<Transactions> ReadByName(string customerId)
         {
             // membuat objek collection untuk menampung objek mahasiswa
             List<Transactions> list = new List<Transactions>();
@@ -196,13 +196,13 @@ namespace Laundry.Model.Repository
                 // deklarasi perintah SQL
                 string sql = @"select id, employee_id, customer_id, service_id, weight, status, total 
                                from transactions
-                               where id like @id";
+                               where customer_id like @customer_id";
 
                 // membuat objek command menggunakan blok using
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
                 {
                     // mendaftarkan parameter dan mengeset nilainya
-                    cmd.Parameters.AddWithValue("@id", string.Format("%{0}%", id));
+                    cmd.Parameters.AddWithValue("@customer_id", string.Format("%{0}%", customerId));
 
                     // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
                     using (SQLiteDataReader dtr = cmd.ExecuteReader())
@@ -218,7 +218,7 @@ namespace Laundry.Model.Repository
                             t.ServiceId = dtr["service_id"].ToString();
 
                             int weight;
-                            if (int.TryParse(dtr["employee_id"].ToString(), out weight))
+                            if (int.TryParse(dtr["weight"].ToString(), out weight))
                             {
                                 t.Weight = weight;
                             }
@@ -229,15 +229,16 @@ namespace Laundry.Model.Repository
 
                             t.Status = dtr["status"].ToString();
 
-                            float total;
-                            if (float.TryParse(dtr["employee_id"].ToString(), out total))
+                            decimal total;
+                            if (decimal.TryParse(dtr["total"].ToString(), out total))
                             {
-                                t.Weight = weight;
+                                t.Total = total;
                             }
                             else
                             {
                                 t.Total = 0;
                             }
+
 
                             // tambahkan objek mahasiswa ke dalam collection
                             list.Add(t);

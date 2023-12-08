@@ -135,8 +135,6 @@ namespace Laundry.View
 
         private void LoadDataByClick()
         {
-            ClearTextBoxes();
-            // kosongkan listview
             lvwTransactions.Items.Clear();
             // panggil method ReadAll dan tampung datanya ke dalam collection
             listOfTransaction = tc.ReadAll();
@@ -155,7 +153,6 @@ namespace Laundry.View
 
                 item.SubItems.Add(t.Weight.ToString());
                 item.SubItems.Add(t.Status);
-                Console.WriteLine($"Jumlah total di loaddata: {t.Total}");
                 item.SubItems.Add(t.Total.ToString());
 
                 // tampilkan data mhs ke listview
@@ -174,7 +171,8 @@ namespace Laundry.View
                 Transactions t = new Transactions();
 
                 // Mendapatkan data dari item yang dipilih
-  
+
+                t.Id = selectedItem.SubItems[1].Text;
                 t.CustomerId = selectedItem.SubItems[2].Text;
                 t.ServiceId = selectedItem.SubItems[3].Text;
 
@@ -204,32 +202,34 @@ namespace Laundry.View
 
                 cbCustomer.Text = t.CustomerId;
                 cbService.Text = t.ServiceId;
-                txtWeight.Text = t.Weight.ToString(); // Konversi float ke string
+                txtWeight.Text = t.Weight.ToString(); 
                 txtStatus.Text = t.Status;
                 lblTotal.Text = t.Total.ToString();
             }
         }
 
-        private void LoadDataCustomerByName(string name)
+        private void LoadDataByName(string name)
         {
-            ClearTextBoxes();
-            // kosongkan listview
             lvwTransactions.Items.Clear();
             // panggil method ReadAll dan tampung datanya ke dalam collection
-            listOfTransaction = tc.ReadAll();
+            listOfTransaction = tc.ReadByName(name);
             // ekstrak objek mhs dari collection
             foreach (var t in listOfTransaction)
             {
                 var noUrut = lvwTransactions.Items.Count + 1;
                 var item = new ListViewItem(noUrut.ToString());
                 item.SubItems.Add(t.Id);
-                var r = cc.ReadById(t.Id);
+                var r = cc.ReadById(t.CustomerId);
                 item.SubItems.Add(r.Name);
 
                 var layanan = sc.ReadById(t.ServiceId);
                 item.SubItems.Add(layanan.Name);
+
                 item.SubItems.Add(t.Weight.ToString());
+
                 item.SubItems.Add(t.Status);
+
+                item.SubItems.Add(t.Total.ToString());
                 // tampilkan data mhs ke listview
                 lvwTransactions.Items.Add(item);
             }
@@ -311,7 +311,7 @@ namespace Laundry.View
             lblTotal.Text = total.ToString();
 
             t.Total = dWeight * servicePrice;
-            Console.WriteLine($"Nilai Total di frm: {t.Total}");
+            
 
             tc.Create(t);
 
@@ -322,17 +322,135 @@ namespace Laundry.View
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-         
+            if (lvwTransactions.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = lvwTransactions.SelectedItems[0];
+                LoadDataByClick();
+                Transactions t = new Transactions();
+                var id = selectedItem.SubItems[1].Text;
+                t.Id = id;
+                var rCustomerId = cc.ReadDetailByName(cbCustomer.Text);
+                if (rCustomerId != null)
+                {
+                    t.CustomerId = rCustomerId.Id;
+                }
+                else
+                {
+                    MessageBox.Show("Pelanggan tidak ditemukan.", "Peringatan",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                var rServiceId = sc.ReadByName(cbService.Text);
+                if (rServiceId != null)
+                {
+                    t.ServiceId = rServiceId.Id;
+                }
+                else
+                {
+                    MessageBox.Show("Layanan tidak ditemukan.", "Peringatan",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                FrmLogin Login = new FrmLogin();
+                string usernameFromLogin = Login.EnteredUsername;
+                var r = ec.ReadByUsername(usernameFromLogin);
+                t.EmployeeId = r.Id;
+
+                Console.WriteLine($"informasi customer dari txt: {t.Id}");
+
+                Console.WriteLine($"informasi customer dari txt: {cbCustomer.Text}");
+
+                Console.WriteLine($"informasi service dari txt: {cbService.Text}");
+
+                Console.WriteLine($"informasi status dari txt: {txtStatus.Text}");
+
+                Console.WriteLine($"informasi berat dari txt: {txtWeight.Text}");
+
+                Console.WriteLine($"informasi berat dari txt: {lblTotal.Text}");
+
+
+
+                if (int.TryParse(txtWeight.Text, out int weight))
+                {
+                    t.Weight = weight;
+                }
+                else
+                {
+                    MessageBox.Show("Masukkan berat dalam format numerik.", "Peringatan",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                
+
+                t.Status = txtStatus.Text;
+
+                decimal dWeight = weight;
+
+                decimal servicePrice = rServiceId.Price;
+
+                decimal total = dWeight * servicePrice;
+
+                lblTotal.Text = total.ToString();
+
+                t.Total = dWeight * servicePrice;
+
+                tc.Update(t);
+
+                LoadData();
+            }
+            else // data belum dipilih
+            {
+                MessageBox.Show("Data belum dipilih", "Peringatan",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            if (lvwTransactions.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = lvwTransactions.SelectedItems[0];
+                var konfirmasi = MessageBox.Show("Apakah data transaksi ingin dihapus ? ", "Konfirmasi",
 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (konfirmasi == DialogResult.Yes)
+                {
+                    var id = selectedItem.SubItems[1].Text;
+                    var result = tc.Delete(id);
+                    if (result > 0) LoadData();
+                }
+            }
+            else // data belum dipilih
+            {
+                MessageBox.Show("Data layanan belum dipilih !!!", "Peringatan",
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            var name = cc.ReadDetailByName(txtSearch.Text);
 
+            // Check if the name is null or empty
+            if (!string.IsNullOrEmpty(name.Id))
+            {
+                try
+                {
+                    LoadDataByName(name.Id);
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception (display a message, log, etc.)
+                    MessageBox.Show($"Error loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                // Inform the user that the name is required
+                MessageBox.Show("Please enter a name.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
