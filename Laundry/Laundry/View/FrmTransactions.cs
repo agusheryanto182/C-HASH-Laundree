@@ -250,8 +250,6 @@ namespace Laundry.View
         private void FrmTransactions_Load(object sender, EventArgs e)
         {
             LoadData();
-            FillComboBoxCustomer();
-            FillComboBoxService();
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -311,7 +309,8 @@ namespace Laundry.View
             lblTotal.Text = total.ToString();
 
             t.Total = dWeight * servicePrice;
-            
+
+            t.Order = DateTime.Now;
 
             tc.Create(t);
 
@@ -493,6 +492,8 @@ namespace Laundry.View
 
                 }
 
+                t.Finish = DateTime.Now;
+
                 tc.UpdateStatus(t);
 
                 LoadData();
@@ -508,6 +509,11 @@ namespace Laundry.View
         private void txtStatus_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ClearTextBoxes();
         }
     }
 }

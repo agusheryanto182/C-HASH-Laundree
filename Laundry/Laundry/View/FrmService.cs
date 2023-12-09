@@ -254,5 +254,10 @@ namespace Laundry.View
                 MessageBox.Show("Please enter a name.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ClearTextBoxes();
+        }
     }
 }

@@ -37,9 +37,7 @@ namespace Laundry.Model.Helper
                     id VARCHAR(255) PRIMARY KEY,
                     name VARCHAR(255),
                     address VARCHAR(255),
-                    phone_number VARCHAR(255),
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    phone_number VARCHAR(255)
                     );";
 
                     string createServicesTableQuery = @"
@@ -47,9 +45,7 @@ namespace Laundry.Model.Helper
                     id VARCHAR(255) PRIMARY KEY,
                     name VARCHAR(255),
                     price FLOAT,
-                    duration VARCHAR(255),
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                    duration VARCHAR(255)
                     );";
 
                     string createTransactionsTableQuery = @"
@@ -62,7 +58,7 @@ namespace Laundry.Model.Helper
                     status VARCHAR(255),
                     total DECIMAL(10, 2),
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    finished_at TIMESTAMP,
                     FOREIGN KEY (employee_id) REFERENCES employees(id),
                     FOREIGN KEY (customer_id) REFERENCES customers(id),
                     FOREIGN KEY (service_id) REFERENCES services(id)

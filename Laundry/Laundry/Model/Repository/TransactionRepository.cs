@@ -49,8 +49,8 @@ namespace Laundry.Model.Repository
             int result = 0;
 
             // deklarasi perintah SQL
-            string sql = @"insert into transactions (id, employee_id, customer_id, service_id, weight, status, total)
-                   values (@id, @employee_id, @customer_id, @service_id, @weight, @status, @total)";
+            string sql = @"insert into transactions (id, employee_id, customer_id, service_id, weight, status, total, created_at)
+                   values (@id, @employee_id, @customer_id, @service_id, @weight, @status, @total, @created_at)";
 
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
@@ -64,7 +64,7 @@ namespace Laundry.Model.Repository
                 cmd.Parameters.AddWithValue("@weight", t.Weight);
                 cmd.Parameters.AddWithValue("@status", t.Status);
                 cmd.Parameters.AddWithValue("@total", t.Total);
-                Console.WriteLine($"Nilai Parameter @total: {cmd.Parameters["@total"].Value}");
+                cmd.Parameters.AddWithValue("@created_at", t.Order);
 
 
                 try
@@ -121,7 +121,7 @@ namespace Laundry.Model.Repository
             int result = 0;
 
             // deklarasi perintah SQL
-            string sql = @"update transactions SET status = @status
+            string sql = @"update transactions SET status = @status, finished_at = @finished_at
                            where id = @id";
 
             // membuat objek command menggunakan blok using
@@ -131,7 +131,7 @@ namespace Laundry.Model.Repository
                 // mendaftarkan parameter dan mengeset nilainya
                 cmd.Parameters.AddWithValue("@id", t.Id);
                 cmd.Parameters.AddWithValue("@status", t.Status);
-
+                cmd.Parameters.AddWithValue("@finished_at", t.Finish);
 
                 try
                 {
@@ -181,7 +181,7 @@ namespace Laundry.Model.Repository
 
             try
             {
-                string sql = @"SELECT id, employee_id, customer_id, service_id, weight, status, total, created_at, updated_at
+                string sql = @"SELECT id, employee_id, customer_id, service_id, weight, status, total, created_at, finished_at
                         FROM transactions";
 
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
@@ -190,16 +190,18 @@ namespace Laundry.Model.Repository
                     {
                         while (dtr.Read())
                         {
-                            Transactions t = new Transactions
-                            {
-                                Id = dtr["id"].ToString(),
-                                EmployeeId = dtr["employee_id"].ToString(),
-                                CustomerId = dtr["customer_id"].ToString(),
-                                ServiceId = dtr["service_id"].ToString(),
-                                Weight = int.TryParse(dtr["weight"].ToString(), out int weight) ? weight : 0,
-                                Status = dtr["status"].ToString(),
-                                Total = decimal.TryParse(dtr["total"].ToString(), out decimal total) ? total : 0
-                            };
+                            Transactions t = new Transactions();
+                            t.Id = dtr["id"].ToString();
+                            t.EmployeeId = dtr["employee_id"].ToString();
+                            t.CustomerId = dtr["customer_id"].ToString();
+                            t.ServiceId = dtr["service_id"].ToString();
+                            t.Weight = dtr["weight"] == DBNull.Value ? 0 : Convert.ToInt32(dtr["weight"]);
+                            t.Status = dtr["status"].ToString();
+                            t.Total = dtr["total"] == DBNull.Value ? 0 : Convert.ToDecimal(dtr["total"]);
+
+                            // Check for DBNull before converting to DateTime
+                            t.Order = dtr["created_at"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dtr["created_at"]);
+                            t.Finish = dtr["finished_at"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(dtr["finished_at"]);
 
                             list.Add(t);
                         }
@@ -208,12 +210,15 @@ namespace Laundry.Model.Repository
             }
             catch (SQLiteException ex)
             {
-                // Catat kesalahan menggunakan kerangka pencatatan atau Console.WriteLine
+                // Handle the exception using a logging framework or Console.WriteLine
                 Console.WriteLine("ReadAll error: {0}", ex.Message);
             }
 
             return list;
         }
+
+
+
 
 
         // Method untuk menampilkan data mahasiwa berdasarkan pencarian nama

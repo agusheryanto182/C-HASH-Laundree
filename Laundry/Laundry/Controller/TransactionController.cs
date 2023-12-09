@@ -92,6 +92,7 @@ namespace Laundry.Controller
                 return 0;
             }
 
+
             // membuat objek context menggunakan blok using
             using (DbContext context = new DbContext())
             {

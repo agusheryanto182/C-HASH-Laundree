@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Laundry",
+    "\\Laundry\\Model",
+    "\\Laundry\\Model\\Context",
+    "\\Laundry\\Model\\Entity",
+    "\\Laundry\\Model\\Helper",
+    "\\Laundry\\Model\\Repository"
+  ],
+  "SelectedNode": "\\Laundry\\View",
+  "PreviewInSolutionExplorer": false
+}
