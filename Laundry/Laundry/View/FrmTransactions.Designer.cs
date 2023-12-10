@@ -40,6 +40,7 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnPay = new System.Windows.Forms.Button();
             this.lblTotal = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtPay = new System.Windows.Forms.TextBox();
@@ -51,9 +52,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.cbCustomer = new System.Windows.Forms.ComboBox();
-            this.btnPay = new System.Windows.Forms.Button();
-            this.txtStatus = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.txtStatus = new System.Windows.Forms.Label();
+            this.btnPrintReceipt = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -195,6 +196,20 @@
             this.groupBox3.TabIndex = 92;
             this.groupBox3.TabStop = false;
             // 
+            // btnPay
+            // 
+            this.btnPay.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnPay.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPay.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnPay.Location = new System.Drawing.Point(77, 129);
+            this.btnPay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnPay.Name = "btnPay";
+            this.btnPay.Size = new System.Drawing.Size(88, 44);
+            this.btnPay.TabIndex = 97;
+            this.btnPay.Text = "Bayar";
+            this.btnPay.UseVisualStyleBackColor = false;
+            this.btnPay.Click += new System.EventHandler(this.btnPay_Click_1);
+            // 
             // lblTotal
             // 
             this.lblTotal.AutoSize = true;
@@ -298,29 +313,6 @@
             this.cbCustomer.Size = new System.Drawing.Size(159, 24);
             this.cbCustomer.TabIndex = 96;
             // 
-            // btnPay
-            // 
-            this.btnPay.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnPay.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPay.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnPay.Location = new System.Drawing.Point(77, 129);
-            this.btnPay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnPay.Name = "btnPay";
-            this.btnPay.Size = new System.Drawing.Size(88, 44);
-            this.btnPay.TabIndex = 97;
-            this.btnPay.Text = "Bayar";
-            this.btnPay.UseVisualStyleBackColor = false;
-            this.btnPay.Click += new System.EventHandler(this.btnPay_Click_1);
-            // 
-            // txtStatus
-            // 
-            this.txtStatus.Location = new System.Drawing.Point(545, 325);
-            this.txtStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtStatus.Name = "txtStatus";
-            this.txtStatus.Size = new System.Drawing.Size(159, 22);
-            this.txtStatus.TabIndex = 90;
-            this.txtStatus.TextChanged += new System.EventHandler(this.txtStatus_TextChanged);
-            // 
             // button1
             // 
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
@@ -332,17 +324,39 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // txtStatus
+            // 
+            this.txtStatus.AutoSize = true;
+            this.txtStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStatus.Location = new System.Drawing.Point(542, 329);
+            this.txtStatus.Name = "txtStatus";
+            this.txtStatus.Size = new System.Drawing.Size(0, 18);
+            this.txtStatus.TabIndex = 98;
+            this.txtStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnPrintReceipt
+            // 
+            this.btnPrintReceipt.Image = ((System.Drawing.Image)(resources.GetObject("btnPrintReceipt.Image")));
+            this.btnPrintReceipt.Location = new System.Drawing.Point(954, 575);
+            this.btnPrintReceipt.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnPrintReceipt.Name = "btnPrintReceipt";
+            this.btnPrintReceipt.Size = new System.Drawing.Size(56, 57);
+            this.btnPrintReceipt.TabIndex = 99;
+            this.btnPrintReceipt.UseVisualStyleBackColor = true;
+            this.btnPrintReceipt.Click += new System.EventHandler(this.btnPrintReceipt_Click);
+            // 
             // FrmTransactions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1040, 748);
+            this.Controls.Add(this.btnPrintReceipt);
+            this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.cbCustomer);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.cbService);
-            this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtWeight);
             this.Controls.Add(this.label1);
@@ -396,7 +410,8 @@
         private System.Windows.Forms.ComboBox cbCustomer;
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Button btnPay;
-        private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label txtStatus;
+        private System.Windows.Forms.Button btnPrintReceipt;
     }
 }

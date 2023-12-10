@@ -33,16 +33,17 @@ namespace Laundry.Model.Repository
                 return c;
             }
         }
-
         private string GenerateId()
         {
-            int c = GetCount();
-            int r = c + 1;
+            int count = GetCount();
+            int incrementedCount = count + 1;
 
-            string n = "ID-TRC-" + r + "-LAUNDREE";
+            // Menggunakan ticks sebagai bagian dari ID untuk memastikan keunikan
+            string id = $"ID-TRC-{incrementedCount}-{DateTime.Now.Ticks}";
 
-            return n;
+            return id;
         }
+
 
         public int Create(Transactions t)
         {
@@ -70,7 +71,6 @@ namespace Laundry.Model.Repository
                 try
                 {
                     result = cmd.ExecuteNonQuery();
-                    Console.WriteLine($"Jumlah Baris yang Terpengaruh: {result}");
 
                 }
                 catch (Exception ex)
@@ -87,7 +87,7 @@ namespace Laundry.Model.Repository
             int result = 0;
 
             // deklarasi perintah SQL
-            string sql = @"update transactions SET service_id = @service_id, weight = @weight, status = @status, total = @total
+            string sql = @"update transactions SET service_id = @service_id, employee_id = @employee_id, weight = @weight, status = @status, total = @total
                            where id = @id";
 
             // membuat objek command menggunakan blok using
@@ -97,6 +97,7 @@ namespace Laundry.Model.Repository
                 // mendaftarkan parameter dan mengeset nilainya
                 cmd.Parameters.AddWithValue("@id", t.Id);
                 cmd.Parameters.AddWithValue("@service_id", t.ServiceId);
+                cmd.Parameters.AddWithValue("@employee_id", t.EmployeeId);
                 cmd.Parameters.AddWithValue("@weight", t.Weight);
                 cmd.Parameters.AddWithValue("@status", t.Status);
                 cmd.Parameters.AddWithValue("@total", t.Total);
@@ -121,7 +122,7 @@ namespace Laundry.Model.Repository
             int result = 0;
 
             // deklarasi perintah SQL
-            string sql = @"update transactions SET status = @status, finished_at = @finished_at
+            string sql = @"update transactions SET employee_id = @employee_id, status = @status, finished_at = @finished_at
                            where id = @id";
 
             // membuat objek command menggunakan blok using
@@ -130,6 +131,7 @@ namespace Laundry.Model.Repository
 
                 // mendaftarkan parameter dan mengeset nilainya
                 cmd.Parameters.AddWithValue("@id", t.Id);
+                cmd.Parameters.AddWithValue("@employee_id", t.EmployeeId);
                 cmd.Parameters.AddWithValue("@status", t.Status);
                 cmd.Parameters.AddWithValue("@finished_at", t.Finish);
 

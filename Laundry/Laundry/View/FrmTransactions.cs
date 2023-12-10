@@ -52,6 +52,7 @@ namespace Laundry.View
             lvwTransactions.Columns.Add("No.", 35, HorizontalAlignment.Center);
             lvwTransactions.Columns.Add("ID Transaction", 200, HorizontalAlignment.Center);
             lvwTransactions.Columns.Add("Nama Pelanggan", 200, HorizontalAlignment.Center);
+            lvwTransactions.Columns.Add("Kasir", 200, HorizontalAlignment.Center);
             lvwTransactions.Columns.Add("Layanan", 200, HorizontalAlignment.Left);
             lvwTransactions.Columns.Add("Berat", 200, HorizontalAlignment.Center);
             lvwTransactions.Columns.Add("Status", 200, HorizontalAlignment.Center);
@@ -120,12 +121,14 @@ namespace Laundry.View
                 var customerName = cc.ReadById(t.CustomerId);
                 item.SubItems.Add(customerName.Name);
 
+                var cashierName = ec.ReadById(t.EmployeeId);
+                item.SubItems.Add(cashierName.Name);
+
                 var serviceName = sc.ReadById(t.ServiceId);
                 item.SubItems.Add(serviceName.Name);
 
                 item.SubItems.Add(t.Weight.ToString());
                 item.SubItems.Add(t.Status);
-                Console.WriteLine($"Jumlah total di loaddata: {t.Total}");
                 item.SubItems.Add(t.Total.ToString());
 
                 // tampilkan data mhs ke listview
@@ -147,6 +150,9 @@ namespace Laundry.View
 
                 var customerName = cc.ReadById(t.CustomerId);
                 item.SubItems.Add(customerName.Name);
+
+                var cashierName = ec.ReadById(t.EmployeeId);
+                item.SubItems.Add(cashierName.Name);
 
                 var serviceName = sc.ReadById(t.ServiceId);
                 item.SubItems.Add(serviceName.Name);
@@ -174,9 +180,9 @@ namespace Laundry.View
 
                 t.Id = selectedItem.SubItems[1].Text;
                 t.CustomerId = selectedItem.SubItems[2].Text;
-                t.ServiceId = selectedItem.SubItems[3].Text;
+                t.ServiceId = selectedItem.SubItems[4].Text;
 
-                if (int.TryParse(selectedItem.SubItems[4].Text, out int weight))
+                if (int.TryParse(selectedItem.SubItems[5].Text, out int weight))
                 {
                     t.Weight = weight;
                 }
@@ -186,9 +192,9 @@ namespace Laundry.View
                     return;
                 }
 
-                t.Status = selectedItem.SubItems[5].Text;
+                t.Status = selectedItem.SubItems[6].Text;
 
-                if (decimal.TryParse(selectedItem.SubItems[6].Text, out decimal total))
+                if (decimal.TryParse(selectedItem.SubItems[7].Text, out decimal total))
                 {
                     t.Total = total;
                 }
@@ -219,17 +225,20 @@ namespace Laundry.View
                 var noUrut = lvwTransactions.Items.Count + 1;
                 var item = new ListViewItem(noUrut.ToString());
                 item.SubItems.Add(t.Id);
-                var r = cc.ReadById(t.CustomerId);
-                item.SubItems.Add(r.Name);
 
-                var layanan = sc.ReadById(t.ServiceId);
-                item.SubItems.Add(layanan.Name);
+                var customerName = cc.ReadById(t.CustomerId);
+                item.SubItems.Add(customerName.Name);
+
+                var cashierName = ec.ReadById(t.EmployeeId);
+                item.SubItems.Add(cashierName.Name);
+
+                var serviceName = sc.ReadById(t.ServiceId);
+                item.SubItems.Add(serviceName.Name);
 
                 item.SubItems.Add(t.Weight.ToString());
-
                 item.SubItems.Add(t.Status);
-
                 item.SubItems.Add(t.Total.ToString());
+
                 // tampilkan data mhs ke listview
                 lvwTransactions.Items.Add(item);
             }
@@ -280,13 +289,12 @@ namespace Laundry.View
             else
             {
                 MessageBox.Show("Layanan tidak ditemukan.", "Peringatan",
-                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-
-            FrmLogin Login = new FrmLogin();
-            string usernameFromLogin = Login.EnteredUsername;
-            var r = ec.ReadByUsername(usernameFromLogin);
+            FrmHome frmHome = (FrmHome)Application.OpenForms["FrmHome"];
+            string loginName = frmHome.EnteredName;
+            var r = ec.ReadDetailByName(loginName);
             t.EmployeeId = r.Id;
 
             if (int.TryParse(txtWeight.Text, out int weight))
@@ -297,8 +305,9 @@ namespace Laundry.View
             {
                 MessageBox.Show("Masukkan berat dalam format numerik.", "Peringatan",
                                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
-            t.Status = txtStatus.Text;
+            
 
             decimal dWeight = weight;
 
@@ -323,6 +332,12 @@ namespace Laundry.View
         {
             if (lvwTransactions.SelectedItems.Count > 0)
             {
+                if (txtStatus.Text == "LUNAS")
+                {
+                    MessageBox.Show("Data tidak bisa diubah!!!", "Peringatan",
+                   MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
                 ListViewItem selectedItem = lvwTransactions.SelectedItems[0];
                 LoadDataByClick();
                 Transactions t = new Transactions();
@@ -336,7 +351,7 @@ namespace Laundry.View
                 else
                 {
                     MessageBox.Show("Pelanggan tidak ditemukan.", "Peringatan",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
@@ -352,9 +367,9 @@ namespace Laundry.View
                     return;
                 }
 
-                FrmLogin Login = new FrmLogin();
-                string usernameFromLogin = Login.EnteredUsername;
-                var r = ec.ReadByUsername(usernameFromLogin);
+                FrmHome frmHome = (FrmHome)Application.OpenForms["FrmHome"];
+                string loginName = frmHome.EnteredName;
+                var r = ec.ReadDetailByName(loginName);
                 t.EmployeeId = r.Id;
 
                 if (int.TryParse(txtWeight.Text, out int weight))
@@ -363,8 +378,8 @@ namespace Laundry.View
                 }
                 else
                 {
-                    MessageBox.Show("Masukkan berat dalam format numerik.", "Peringatan",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Masukkan berat dalam format numerik.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
                 }
                 
 
@@ -384,11 +399,12 @@ namespace Laundry.View
 
                 LoadData();
             }
-            else // data belum dipilih
+            else 
             {
                 MessageBox.Show("Data belum dipilih", "Peringatan",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation);
+                return;
             }
         }
 
@@ -407,34 +423,32 @@ namespace Laundry.View
                     if (result > 0) LoadData();
                 }
             }
-            else // data belum dipilih
+            else 
             {
                 MessageBox.Show("Data layanan belum dipilih !!!", "Peringatan",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
             var name = cc.ReadDetailByName(txtSearch.Text);
-
-            // Check if the name is null or empty
+            if (name == null)
+            {
+                MessageBox.Show("Pencarian tidak membuahkan hasil.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
             if (!string.IsNullOrEmpty(name.Id))
             {
-                try
-                {
-                    LoadDataByName(name.Id);
-                }
-                catch (Exception ex)
-                {
-                    // Handle exception (display a message, log, etc.)
-                    MessageBox.Show($"Error loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                LoadDataByName(name.Id);
+                return;
             }
             else
             {
                 // Inform the user that the name is required
-                MessageBox.Show("Please enter a name.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Silahkan masukkan nama.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
         }
 
@@ -450,6 +464,11 @@ namespace Laundry.View
                 var id = selectedItem.SubItems[1].Text;
                 t.Id = id;
 
+                FrmHome frmHome = (FrmHome)Application.OpenForms["FrmHome"];
+                string loginName = frmHome.EnteredName;
+                var r = ec.ReadDetailByName(loginName);
+                t.EmployeeId = r.Id;
+
                 decimal dTotal = 0;
                 if (decimal.TryParse(lblTotal.Text, out decimal total))
                 {
@@ -459,6 +478,7 @@ namespace Laundry.View
                 {
                     MessageBox.Show("Masukkan berat dalam format numerik.", "Peringatan",
                                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
                 }
 
                 decimal dPay = 0;
@@ -470,6 +490,7 @@ namespace Laundry.View
                 {
                     MessageBox.Show("Masukkan berat dalam format numerik.", "Peringatan",
                                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
                 }
 
                 if (txtStatus.Text == "LUNAS")
@@ -514,6 +535,75 @@ namespace Laundry.View
         private void button1_Click(object sender, EventArgs e)
         {
             ClearTextBoxes();
+        }
+
+        private void btnPrintReceipt_Click(object sender, EventArgs e)
+        {
+            if (lvwTransactions.SelectedItems.Count > 0)
+            {
+                // Mendapatkan item yang dipilih
+                ListViewItem selectedItem = lvwTransactions.SelectedItems[0];
+                Transactions t = new Transactions();
+
+                // Mendapatkan data dari item yang dipilih
+                t.Id = selectedItem.SubItems[1].Text;
+                t.CustomerId = selectedItem.SubItems[2].Text;
+                t.EmployeeId  = selectedItem.SubItems[3].Text;
+                t.ServiceId = selectedItem.SubItems[4].Text;
+
+                if (int.TryParse(selectedItem.SubItems[5].Text, out int weight))
+                {
+                    t.Weight = weight;
+                }
+                else
+                {
+                    MessageBox.Show("Invalid weight value in the selected item.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                t.Status = selectedItem.SubItems[6].Text;
+
+                if (decimal.TryParse(selectedItem.SubItems[7].Text, out decimal total))
+                {
+                    t.Total = total;
+                }
+                else
+                {
+                    MessageBox.Show("Invalid total value in the selected item.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Generate receipt text
+                string receiptText = GenerateReceiptText(t);
+
+                // Copy text to clipboard
+                Clipboard.SetText(receiptText);
+
+                // Notify user and allow them to paste the text
+                MessageBox.Show("Resi transaksi telah tersalin ke clipboard.", "Resi transaksi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Silahkan pilih item.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private string GenerateReceiptText(Transactions transaction)
+        {
+
+            // Create an instance of the TransactionReceipt class
+            TransactionReceipt receipt = new TransactionReceipt
+            {
+                Header = "SUKABUMI LAUNDRY\n\nKel. Condongcatur, Kec. Depok, Kab. Sleman, DI Yogyakarta\nNo. HP 0881 2211 3311\ns",
+                TransactionInfo = $"Tanggal : {DateTime.Now:dd/MM/yyyy - HH:mm}\nNo Nota : {transaction.Id}\nKasir : {transaction.EmployeeId}",
+                ItemsInfo = $"Layanan : {transaction.ServiceId}",
+                SummaryInfo = $"Subtotal = Rp. {transaction.Total:C}",
+                Footer = "Status : Menunggu diambil\n\n1. Tanpa request cuci pisah atau cuci manual, Pakaian luntur atau rusak bukan menjadi tanggung jawab laundry.\n2. Komplain pakaian kami layani 1 jam, sejak pakaian diambil.\n3. Bila tidak memberikan catatan jumlah pcs laundry, maka kami anggap benar sesuai jumlah kiloan yang masuk.\n4. Pengambilan laundry wajib menunjukkan nota yang sudah dikirimkan melalui Whatsapp.\n5. Laundry yang tidak diambil jangka waktu 1 bulan, jika terjadi kerusakan bukan menjadi tanggung jawab pemilik.\n6. Pembayaran dilakukan ketika pengambilan laundry, jika ada yang mengatasnamakan SUKABUMI LAUNDRY maka itu bukan pihak kami. \n7. Kami mengucapkan banyak terima kasih telah melakukan transaksi laundry. Semoga anda selalu diberi kelancaran rizky dan semoga sehat selalu"
+            };
+
+            // Generate the receipt text
+            return receipt.GenerateReceiptText();
         }
     }
 }

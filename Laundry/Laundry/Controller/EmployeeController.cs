@@ -34,6 +34,24 @@ namespace Laundry.Controller
             return list;
         }
 
+        public Employee ReadDetailByName(string name)
+        {
+            // membuat objek collection
+            Employee emp = new Employee();
+
+            // membuat objek context menggunakan blok using
+            using (DbContext context = new DbContext())
+            {
+                // membuat objek dari class repository
+                _repository = new EmployeeRepository(context);
+
+                // panggil method ReadByNama yang ada di dalam class repository
+                emp = _repository.ReadDetailByName(name);
+            }
+
+            return emp;
+        }
+
         public Employee ReadByUsername(string username)
         {
             // membuat objek collection
@@ -51,6 +69,25 @@ namespace Laundry.Controller
 
             return emp;
         }
+
+        public Employee ReadById(string employeeId)
+        {
+            // membuat objek collection
+            Employee emp = new Employee();
+
+            // membuat objek context menggunakan blok using
+            using (DbContext context = new DbContext())
+            {
+                // membuat objek dari class repository
+                _repository = new EmployeeRepository(context);
+
+                // panggil method ReadByNama yang ada di dalam class repository
+                emp = _repository.ReadByEmployeeId(employeeId);
+            }
+
+            return emp;
+        }
+
 
         public List<Employee> ReadAll()
         {
@@ -176,12 +213,12 @@ namespace Laundry.Controller
             return result;
         }
 
-        public int Delete(Employee emp)
+        public int Delete(string username)
         {
             int result = 0;
 
             // cek nilai npm yang diinputkan tidak boleh kosong
-            if (string.IsNullOrEmpty(emp.Username))
+            if (string.IsNullOrEmpty(username))
             {
                 MessageBox.Show("Username harus diisi !!!", "Peringatan",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -195,7 +232,7 @@ namespace Laundry.Controller
                 _repository = new EmployeeRepository(context);
 
                 // panggil method Delete class repository untuk menghapus data
-                result = _repository.Delete(emp);
+                result = _repository.Delete(username);
             }
 
             if (result > 0)

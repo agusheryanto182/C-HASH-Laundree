@@ -29,32 +29,16 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmReport));
-            this.btnSearch = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnPrint = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnSearch.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnSearch.Image = ((System.Drawing.Image)(resources.GetObject("btnSearch.Image")));
-            this.btnSearch.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSearch.Location = new System.Drawing.Point(815, 207);
-            this.btnSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(129, 57);
-            this.btnSearch.TabIndex = 62;
-            this.btnSearch.Text = "Cari";
-            this.btnSearch.UseVisualStyleBackColor = false;
             // 
             // label3
             // 
@@ -103,14 +87,6 @@
             this.groupBox1.TabIndex = 65;
             this.groupBox1.TabStop = false;
             // 
-            // txtSearch
-            // 
-            this.txtSearch.Location = new System.Drawing.Point(529, 224);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(271, 22);
-            this.txtSearch.TabIndex = 61;
-            // 
             // btnPrint
             // 
             this.btnPrint.BackColor = System.Drawing.SystemColors.Window;
@@ -143,9 +119,7 @@
             this.ClientSize = new System.Drawing.Size(1040, 748);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnPrint);
-            this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.txtSearch);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -158,17 +132,14 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.DataGridView dataGridView1;
     }

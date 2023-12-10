@@ -14,9 +14,6 @@ namespace Laundry.Controller
     {
         // deklarasi objek Repository untuk menjalankan operasi CRUD
         private TransactionRepository _repository;
-        private CustomerController _customerController;
-        private ServiceController _serviceController;
-
 
         public List<Transactions> ReadByName(string name)
         {

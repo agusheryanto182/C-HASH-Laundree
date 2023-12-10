@@ -177,7 +177,7 @@ namespace Laundry.View
         {
             lvwService.Items.Clear();
             // panggil method ReadAll dan tampung datanya ke dalam collection
-            detailS = controller.ReadByName(name);
+            listOfService = controller.ReadByNames(name);
             // ekstrak objek mhs dari collection
             foreach (var s in listOfService)
             {
@@ -234,6 +234,9 @@ namespace Laundry.View
         private void btnSearch_Click(object sender, EventArgs e)
         {
             var name = txtSearch.Text;
+
+            Console.WriteLine($"Isi txtsearch: {txtSearch.Text}");
+
 
             // Check if the name is null or empty
             if (!string.IsNullOrEmpty(name))

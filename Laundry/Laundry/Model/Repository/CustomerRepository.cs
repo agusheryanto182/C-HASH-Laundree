@@ -33,16 +33,17 @@ namespace Laundry.Model.Repository
             }
         }
 
-        private string GenerateCustomerId()
+        private string GenerateId()
         {
-            int currentCustomerCount = GetCustomerCount();
-            int newCustomerIdNumber = currentCustomerCount + 1;
+            int count = GetCustomerCount();
+            int incrementedCount = count + 1;
 
-            // Format ID pelanggan sesuai dengan keinginan Anda (misalnya, "ID-PEL001")
-            string newCustomerId = "ID-CS-" + newCustomerIdNumber + "-LAUNDREE";
+            // Menggunakan ticks sebagai bagian dari ID untuk memastikan keunikan
+            string id = $"ID-CS-{incrementedCount}-{DateTime.Now.Ticks}";
 
-            return newCustomerId;
+            return id;
         }
+
 
         public int Create(Customer cs)
         {
@@ -55,7 +56,7 @@ namespace Laundry.Model.Repository
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
-                string newCustomerId = GenerateCustomerId();
+                string newCustomerId = GenerateId();
 
                 cmd.Parameters.AddWithValue("@id", newCustomerId);
                 cmd.Parameters.AddWithValue("@name", cs.Name);

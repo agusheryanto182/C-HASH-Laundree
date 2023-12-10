@@ -29,7 +29,8 @@ namespace Laundry.Model.Helper
                     id VARCHAR(255) PRIMARY KEY,
                     username VARCHAR(50) NOT NULL,
                     name VARCHAR(255) NOT NULL,
-                    password VARCHAR(100) NOT NULL
+                    password VARCHAR(255) NOT NULL,
+                    auth_password VARCHAR(255) 
                     );";
 
                     string createCustomersTableQuery = @"
@@ -88,8 +89,11 @@ namespace Laundry.Model.Helper
 
         }
 
+
+
         public static void InsertAdminUserIfNotExist()
         {
+
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();

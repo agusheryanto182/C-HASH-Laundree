@@ -10,13 +10,12 @@ using System.Windows.Forms;
 using Laundry.Model.Entity;
 using Laundry.Controller;
 using System.Xml.Linq;
+using System.Security.Cryptography;
 
 namespace Laundry.View
 {
     public partial class FrmEmployee : Form
     {
-        // deklarasi tipe data untuk event OnCreate dan OnUpdate
-        public delegate void CreateUpdateEventHandler(Employee emp);
         // deklarasi objek controller
         private EmployeeController controller;
         // deklarasi field untuk meyimpan objek mahasiswa
@@ -30,6 +29,7 @@ namespace Laundry.View
             InisialisasiListView();
             LoadDataEmployee ();
             LoadDataEmployeeByClick();
+            txtPassword.UseSystemPasswordChar = true;
         }
 
         // atur kolom listview
@@ -39,9 +39,8 @@ namespace Laundry.View
             lvwEmployee.FullRowSelect = true;
             lvwEmployee.GridLines = true;
             lvwEmployee.Columns.Add("No.", 35, HorizontalAlignment.Center);
-            lvwEmployee.Columns.Add("Username", 200, HorizontalAlignment.Center);
-            lvwEmployee.Columns.Add("Name", 200, HorizontalAlignment.Left);
-            lvwEmployee.Columns.Add("Password", 200, HorizontalAlignment.Center);
+            lvwEmployee.Columns.Add("Username", 300, HorizontalAlignment.Center);
+            lvwEmployee.Columns.Add("Name", 300, HorizontalAlignment.Left);
         }
 
         // method untuk menampilkan semua data mahasiswa
@@ -59,7 +58,6 @@ namespace Laundry.View
                 var item = new ListViewItem(noUrut.ToString());
                 item.SubItems.Add(emp.Username);
                 item.SubItems.Add(emp.Name);
-                item.SubItems.Add(emp.Password);
                 // tampilkan data mhs ke listview
                 lvwEmployee.Items.Add(item);
             }
@@ -78,7 +76,6 @@ namespace Laundry.View
                 var item = new ListViewItem(noUrut.ToString());
                 item.SubItems.Add(emp.Username);
                 item.SubItems.Add(emp.Name);
-                item.SubItems.Add(emp.Password);
                 // tampilkan data mhs ke listview
                 lvwEmployee.Items.Add(item);
             }
@@ -98,7 +95,6 @@ namespace Laundry.View
                 var item = new ListViewItem(noUrut.ToString());
                 item.SubItems.Add(emp.Username);
                 item.SubItems.Add(emp.Name);
-                item.SubItems.Add(emp.Password);
                 // tampilkan data mhs ke listview
                 lvwEmployee.Items.Add(item);
             }
@@ -114,12 +110,13 @@ namespace Laundry.View
                 // Mendapatkan data dari item yang dipilih
                 string username = selectedItem.SubItems[1].Text;
                 string name = selectedItem.SubItems[2].Text;
-                string password = selectedItem.SubItems[3].Text;
 
                 // Menampilkan data ke TextBox
                 txtUsername.Text = username;
                 txtName.Text = name;
-                txtPassword.Text = password;
+                // Di bagian deklarasi kelas atau konstruktor
+              
+
             }
         }
 
@@ -133,18 +130,68 @@ namespace Laundry.View
 
         }
 
+        // Fungsi untuk menghasilkan salt acak
+        static string GenerateSalt()
+        {
+            byte[] saltBytes = new byte[16];
+            using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider())
+            {
+                rngCsp.GetBytes(saltBytes);
+            }
+            return Convert.ToBase64String(saltBytes);
+        }
+
+        // Fungsi untuk menghitung hash menggunakan SHA-256
+        static string ComputeSHA256Hash(string input)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                // Mengubah byte array menjadi string hex
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < hashedBytes.Length; i++)
+                {
+                    builder.Append(hashedBytes[i].ToString("x2"));
+                }
+
+                return builder.ToString();
+            }
+        }
+
         private void btnTambah_Click(object sender, EventArgs e)
         {
-            Employee emp = new Employee();
-            // set nilai property objek mahasiswa yg diambil dari TextBox
-            emp.Username = txtUsername.Text;
-            emp.Name = txtName.Text;
-            emp.Password = txtPassword.Text;
+            FrmHome frmHome = (FrmHome)Application.OpenForms["FrmHome"];
+            string loginName = frmHome.EnteredName;
 
-            controller.Create(emp);
-            LoadDataEmployee();
+            if (loginName == "admin")
+            {
+                Employee emp = new Employee();
+                // set nilai property objek mahasiswa yg diambil dari TextBox
+                emp.Username = txtUsername.Text;
+                emp.Name = txtName.Text;
+                string password = txtPassword.Text;
 
-            ClearTextBoxes();
+                string salt = GenerateSalt();
+
+                string combinedString = password + salt;
+
+                string hashedPassword = ComputeSHA256Hash(combinedString);
+
+                emp.Password = hashedPassword;
+
+                emp.AuthPassword = salt;
+
+                controller.Create(emp);
+                LoadDataEmployee();
+
+                ClearTextBoxes();
+            } else
+            {
+                MessageBox.Show("Anda tidak memiliki izin !!!", "Peringatan",
+           MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
 
         }
 
@@ -169,22 +216,33 @@ namespace Laundry.View
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            FrmHome frmHome = (FrmHome)Application.OpenForms["FrmHome"];
+            string loginName = frmHome.EnteredName;
+            Console.WriteLine("di bagian delete : " + loginName);
+
             if (lvwEmployee.SelectedItems.Count > 0)
             {
-                var konfirmasi = MessageBox.Show("Apakah data employee ingin dihapus ? ", "Konfirmasi",
-
-                MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
-                if (konfirmasi == DialogResult.Yes)
+                if (loginName == "admin")
                 {
-                    // ambil objek mhs yang mau dihapus dari collection
-                    Employee emp =
-                   listOfEmployee[lvwEmployee.SelectedIndices[0]];
-                    // panggil operasi CRUD
-                    var result = controller.Delete(emp);
-                    if (result > 0) LoadDataEmployee();
+                    var konfirmasi = MessageBox.Show("Apakah data employee ingin dihapus ? ", "Konfirmasi",
+
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    if (konfirmasi == DialogResult.Yes)
+                    {
+                        // ambil objek mhs yang mau dihapus dari collection
+                        string username = txtUsername.Text;
+                        var result = controller.Delete(username);
+                        if (result > 0) LoadDataEmployee();
+                    }
+
+                }else
+                {
+                    MessageBox.Show("Anda tidak memiliki izin !!!", "Peringatan",
+                   MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+               
             }
-            else // data belum dipilih
+            else 
             {
                 MessageBox.Show("Data employee belum dipilih !!!", "Peringatan",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -193,25 +251,97 @@ namespace Laundry.View
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            if (lvwEmployee.SelectedItems.Count > 0)
+            FrmHome frmHome = (FrmHome)Application.OpenForms["FrmHome"];
+            if (frmHome != null)
             {
-                LoadDataEmployeeByClick();
-                // set nilai property objek mahasiswa yg diambil dari TextBox
-                Employee emp = new Employee();
-                emp.Username = txtUsername.Text;
-                emp.Name = txtName.Text;
-                emp.Password = txtPassword.Text;
+                string loginName = frmHome.EnteredName;
 
-                controller.Update(emp);
-                LoadDataEmployee();
+                // Memastikan loginName tidak null atau kosong
+                if (string.IsNullOrEmpty(loginName))
+                {
+                    Console.WriteLine("LoginName is null or empty.");
+                    return;
+                }
+
+                // Mengambil data dari database berdasarkan nama
+                var r = controller.ReadDetailByName(loginName);
+
+                // Memastikan hasil query tidak null
+                if (r == null)
+                {
+                    Console.WriteLine("Data not found for loginName: " + loginName);
+                    return;
+                }
+
+                Console.WriteLine("LoginName: " + loginName);
+                Console.WriteLine("Name from database: " + r.Name);
+
+                if (lvwEmployee.SelectedItems.Count > 0)
+                {
+                    LoadDataEmployeeByClick();
+
+                    // set nilai property objek mahasiswa yg diambil dari TextBox
+                    Employee emp = new Employee();
+                    emp.Username = txtUsername.Text;
+
+                    // Memastikan hasil query untuk username tidak null
+                    var result = controller.ReadByUsername(emp.Username);
+                    if (result != null)
+                    {
+                        // Memastikan bahwa hasil query untuk username ada dan sesuai
+                        if (r.Username == emp.Username || loginName == "admin")
+                        {
+                            emp.Name = txtName.Text;
+
+                            // Cek apakah password diubah atau tidak
+                            if (string.IsNullOrEmpty(txtPassword.Text))
+                            {
+                                // Password tidak diubah, gunakan password dari database
+                                emp.Password = result.Password;
+                                emp.AuthPassword = result.AuthPassword;
+                            }
+                            else
+                            {
+                                // Password diubah, lakukan hashing
+                                string password = txtPassword.Text;
+                                string salt = GenerateSalt();
+                                string combinedString = password + salt;
+                                string hashedPassword = ComputeSHA256Hash(combinedString);
+
+                                emp.Password = hashedPassword;
+                                emp.AuthPassword = salt;
+                            }
+
+                            // Melakukan update ke database
+                            controller.Update(emp);
+                            LoadDataEmployee();
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Anda tidak memiliki izin !!!", "Peringatan",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Username not found in the database: " + emp.Username);
+                    }
+                }
+                else // data belum dipilih
+                {
+                    MessageBox.Show("Data belum dipilih", "Peringatan",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+                }
             }
-            else // data belum dipilih
+            else
             {
-                MessageBox.Show("Data belum dipilih", "Peringatan",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation);
+                Console.WriteLine("FrmHome is null.");
             }
         }
+
 
         private void btnSearch_Click(object sender, EventArgs e)
         {

@@ -85,16 +85,17 @@ namespace Laundry.Model.Repository
             }
         }
 
-        private string GenerateCustomerId()
+        private string GenerateId()
         {
-            int currentServiceCount = GetServiceCount();
-            int newServiceIdNumber = currentServiceCount + 1;
+            int count = GetServiceCount();
+            int incrementedCount = count + 1;
 
-            // Format ID pelanggan sesuai dengan keinginan Anda (misalnya, "ID-PEL001")
-            string result = "ID-SV-" + newServiceIdNumber + "-LAUNDREE";
+            // Menggunakan ticks sebagai bagian dari ID untuk memastikan keunikan
+            string id = $"ID-SV-{incrementedCount}-{DateTime.Now.Ticks}";
 
-            return result;
+            return id;
         }
+
 
         public int Create(Service s)
         {
@@ -107,7 +108,7 @@ namespace Laundry.Model.Repository
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
-                string newCustomerId = GenerateCustomerId();
+                string newCustomerId = GenerateId();
 
                 cmd.Parameters.AddWithValue("@id", newCustomerId);
                 cmd.Parameters.AddWithValue("@name", s.Name);
@@ -289,6 +290,62 @@ namespace Laundry.Model.Repository
             }
 
             return service;
+        }
+
+        public List<Service> ReadByNames(string name)
+        {
+            List<Service> list = new List<Service>();
+
+            try
+            {
+                // deklarasi perintah SQL
+                string sql = @"SELECT id, name, price, duration 
+                       FROM services
+                       WHERE name LIKE @name
+                       ORDER BY name";
+
+                // membuat objek command menggunakan blok using
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
+                {
+                    // mendaftarkan parameter dan mengeset nilainya
+                    cmd.Parameters.AddWithValue("@name", string.Format("%{0}%", name));
+
+                    // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
+                    using (SQLiteDataReader dtr = cmd.ExecuteReader())
+                    {
+                        // panggil method Read untuk mendapatkan baris dari result set
+                        while (dtr.Read())
+                        {
+                            Service service = new Service();
+                            // proses konversi dari baris result set ke objek
+                            service = new Service();
+                            service.Id = dtr["id"].ToString();
+                            service.Name = dtr["name"].ToString();
+
+                            // Konversi nilai "price" ke tipe data yang sesuai
+                            if (int.TryParse(dtr["price"].ToString(), out int price))
+                            {
+                                service.Price = price;
+                            }
+                            else
+                            {
+                                service.Price = 0; // Nilai default jika konversi gagal
+                            }
+
+                            service.Duration = dtr["duration"].ToString();
+
+                            list.Add(service);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print("ReadByName error: {0}", ex.Message);
+                // Jangan lupa untuk menangani atau melaporkan kesalahan dengan benar
+            }
+
+            return list;
         }
 
     }

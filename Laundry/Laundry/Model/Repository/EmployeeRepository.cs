@@ -34,21 +34,23 @@ namespace Laundry.Model.Repository
 
         private string GenerateId()
         {
-            int c = GetCount();
-            int r = c + 1;
+            int count = GetCount();
+            int incrementedCount = count + 1;
 
-            string n = "ID-EMP-" + r + "-LAUNDREE";
+            // Menggunakan ticks sebagai bagian dari ID untuk memastikan keunikan
+            string id = $"ID-EMP-{incrementedCount}-{DateTime.Now.Ticks}";
 
-            return n;
+            return id;
         }
+
 
         public int Create(Employee emp)
         {
             int result = 0;
 
             // deklarasi perintah SQL
-            string sql = @"insert into employees (id, username, name, password)
-                           values (@id, @username, @name, @password)";
+            string sql = @"insert into employees (id, username, name, password, auth_password)
+                           values (@id, @username, @name, @password, @auth_password)";
 
             // membuat objek command menggunakan blok using
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
@@ -59,6 +61,8 @@ namespace Laundry.Model.Repository
                 cmd.Parameters.AddWithValue("@username", emp.Username);
                 cmd.Parameters.AddWithValue("@name", emp.Name);
                 cmd.Parameters.AddWithValue("@password", emp.Password);
+                cmd.Parameters.AddWithValue("@auth_password", emp.AuthPassword);
+
 
                 try
                 {
@@ -79,7 +83,7 @@ namespace Laundry.Model.Repository
             int result = 0;
 
             // deklarasi perintah SQL
-            string sql = @"update employees set name = @name, password = @password
+            string sql = @"update employees set name = @name, password = @password, auth_password = @auth_password
                            where username = @username";
 
             // membuat objek command menggunakan blok using
@@ -89,6 +93,7 @@ namespace Laundry.Model.Repository
                 cmd.Parameters.AddWithValue("@username", emp.Username);
                 cmd.Parameters.AddWithValue("@name", emp.Name);
                 cmd.Parameters.AddWithValue("@password", emp.Password);
+                cmd.Parameters.AddWithValue("@auth_password", emp.AuthPassword);
 
                 try
                 {
@@ -104,7 +109,7 @@ namespace Laundry.Model.Repository
             return result;
         }
 
-        public int Delete(Employee emp)
+        public int Delete(string username)
         {
             int result = 0;
 
@@ -116,7 +121,7 @@ namespace Laundry.Model.Repository
             using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
             {
                 // mendaftarkan parameter dan mengeset nilainya
-                cmd.Parameters.AddWithValue("@username", emp.Username);
+                cmd.Parameters.AddWithValue("@username", username);
 
                 try
                 {
@@ -219,6 +224,50 @@ namespace Laundry.Model.Repository
             return list;
         }
 
+        public Employee ReadDetailByName(string name)
+        {
+            // membuat objek collection untuk menampung objek mahasiswa
+            Employee emp = new  Employee();
+
+            try
+            {
+                // deklarasi perintah SQL
+                string sql = @"select id, username, name, password 
+                               from employees 
+                               where name = @name";
+
+                // membuat objek command menggunakan blok using
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
+                {
+                    // mendaftarkan parameter dan mengeset nilainya
+                    cmd.Parameters.AddWithValue("@name", name);
+
+                    // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
+                    using (SQLiteDataReader dtr = cmd.ExecuteReader())
+                    {
+                        if (dtr.Read())
+                        {
+                            emp.Id = dtr["id"].ToString();
+                            emp.Username = dtr["username"].ToString();
+                            emp.Name = dtr["name"].ToString();
+                            emp.Password = dtr["password"].ToString();
+                        }
+                        else
+                        {
+                            emp = null; // atau atur propertinya menjadi string kosong atau nilai default lainnya
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print("ReadByName error: {0}", ex.Message);
+            }
+
+            return emp;
+        }
+
         public Employee ReadByUsername(string username)
         {
             // membuat objek collection untuk menampung objek mahasiswa
@@ -227,15 +276,15 @@ namespace Laundry.Model.Repository
             try
             {
                 // deklarasi perintah SQL
-                string sql = @"select id, username, name, password 
+                string sql = @"select id, username, name, password, auth_password
                                from employees
-                               where username like @username";
+                               where username = @username";
 
                 // membuat objek command menggunakan blok using
                 using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
                 {
                     // mendaftarkan parameter dan mengeset nilainya
-                    cmd.Parameters.AddWithValue("@username", string.Format("%{0}%", username));
+                    cmd.Parameters.AddWithValue("@username", string.Format(username));
 
                     // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
                     using (SQLiteDataReader dtr = cmd.ExecuteReader())
@@ -249,6 +298,53 @@ namespace Laundry.Model.Repository
                             emp.Username = dtr["username"].ToString();
                             emp.Name = dtr["name"].ToString();
                             emp.Password = dtr["password"].ToString();
+                            emp.AuthPassword = dtr["auth_password"].ToString();
+
+
+                            remp = emp;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Print("ReadByUsername error: {0}", ex.Message);
+            }
+
+            return remp;
+        }
+
+        public Employee ReadByEmployeeId(string employeeId)
+        {
+            // membuat objek collection untuk menampung objek mahasiswa
+            Employee remp = new Employee();
+
+            try
+            {
+                // deklarasi perintah SQL
+                string sql = @"select id, username, name, password, auth_password
+                               from employees
+                               where id = @id";
+
+                // membuat objek command menggunakan blok using
+                using (SQLiteCommand cmd = new SQLiteCommand(sql, _conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", employeeId);
+
+                    // membuat objek dtr (data reader) untuk menampung result set (hasil perintah SELECT)
+                    using (SQLiteDataReader dtr = cmd.ExecuteReader())
+                    {
+                        // panggil method Read untuk mendapatkan baris dari result set
+                        while (dtr.Read())
+                        {
+                            // proses konversi dari row result set ke object
+                            Employee emp = new Employee();
+                            emp.Id = dtr["id"].ToString();
+                            emp.Username = dtr["username"].ToString();
+                            emp.Name = dtr["name"].ToString();
+                            emp.Password = dtr["password"].ToString();
+                            emp.AuthPassword = dtr["auth_password"].ToString();
+
 
                             remp = emp;
                         }
