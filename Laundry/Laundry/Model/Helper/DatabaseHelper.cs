@@ -16,7 +16,7 @@ namespace Laundry.Model.Helper
         {
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string databasePath = Path.Combine(currentDirectory, "Database", "Laundry.db");
+            string databasePath = Path.Combine(currentDirectory,"Laundry.db");
 
             string connectionString = $"Data Source={databasePath};Version=3;";
 
@@ -100,7 +100,7 @@ namespace Laundry.Model.Helper
         {
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            string databasePath = Path.Combine(currentDirectory, "Database", "Laundry.db");
+            string databasePath = Path.Combine(currentDirectory,"Laundry.db");
 
             string connectionString = $"Data Source={databasePath};Version=3;";
 

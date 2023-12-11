@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Laundry.exe" size="2340248">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Laundry.exe" size="2333592">
       <assemblyIdentity name="Laundry" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>rW+ItkmQ7DHGHytFZ238ntOCE+aM7Q2xZVUrP16z/Bw=</dsig:DigestValue>
+        <dsig:DigestValue>i6EEd5yL+Y4pbOATHPn3PzsE4flqSt7IZU5P/dxNeDo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

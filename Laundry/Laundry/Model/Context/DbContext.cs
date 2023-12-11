@@ -27,7 +27,7 @@ namespace Laundry.Model.Context
                 // lokasi database perpustakaan Anda
                 string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-                string databasePath = Path.Combine(currentDirectory, "Database", "Laundry.db");
+                string databasePath = Path.Combine(currentDirectory,"Laundry.db");
 
 
                 string dbName = databasePath;
