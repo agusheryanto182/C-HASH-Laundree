@@ -17,3 +17,8 @@ D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\
 D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.View.FrmService.resources
 D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.View.FrmReport.resources
 D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.View.FrmTransactions.resources
+D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\bin\Debug\Laundry.exe.manifest
+D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\bin\Debug\Laundry.application
+D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.TrustInfo.xml
+D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.exe.manifest
+D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Laundry\Laundry\obj\Debug\Laundry.application

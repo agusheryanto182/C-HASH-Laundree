@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 
 namespace Laundry.Model.Context
 {
@@ -24,7 +25,12 @@ namespace Laundry.Model.Context
             {
                 // atur ulang lokasi database yang disesuaikan dengan
                 // lokasi database perpustakaan Anda
-                string dbName = @"D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Database\Laundry.db";
+                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                string databasePath = Path.Combine(currentDirectory, "Database", "Laundry.db");
+
+
+                string dbName = databasePath;
 
                 // deklarasi variabel connectionString, ref: https://www.connectionstrings.com/
                 string connectionString = string.Format("Data Source={0};FailIfMissing=True", dbName);

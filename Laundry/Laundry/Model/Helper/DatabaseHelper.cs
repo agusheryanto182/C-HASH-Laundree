@@ -11,13 +11,18 @@ namespace Laundry.Model.Helper
 {
     public static class DatabaseHelper
     {
-        private static string connectionString = @"Data Source=D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Database\Laundry.db";
 
         public static void InitializeDatabase()
         {
-            if (!File.Exists(@"D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Database\Laundry.db"))
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            string databasePath = Path.Combine(currentDirectory, "Database", "Laundry.db");
+
+            string connectionString = $"Data Source={databasePath};Version=3;";
+
+            if (!File.Exists(connectionString))
             {
-                SQLiteConnection.CreateFile(@"D:\SEMESTER 3\PEMROGRAMAN LANJUT\LAUNDRY\laundry v1\laundry\Database\Laundry.db");
+                SQLiteConnection.CreateFile(databasePath);
 
                 using (var connection = new SQLiteConnection(connectionString))
                 {
@@ -93,6 +98,11 @@ namespace Laundry.Model.Helper
 
         public static void InsertAdminUserIfNotExist()
         {
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            string databasePath = Path.Combine(currentDirectory, "Database", "Laundry.db");
+
+            string connectionString = $"Data Source={databasePath};Version=3;";
 
             using (var connection = new SQLiteConnection(connectionString))
             {
